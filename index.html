@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Portfolio - Subhanshu Sinha</title>
+
+    <!-- bootstrap css cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" href="images/icons8-resume-100.png" />
+
+    <!-- custom css file -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- bootstrap icon cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
+    />
+
+    <!-- AOS Library css file cdn link -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    <!-- jquery cdn link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+   
+  </head>
+
+  <body>
+    <!-- navbar starts -->
+    <nav id="navbar-top" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container-fluid px-5">
+        <!-- Brand Logo -->
+        <a class="navbar-brand fw-bold fs-2" href="#" style="color: #3f396d">
+          Portfolio
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          class="nav-menu d-md-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="bi bi-list fs-3" style="color: #fca61f;"></i>
+        </button>
+
+        <!-- Nav Links -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav gap-4 fs-5">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact Button (Corrected ID) -->
+        <a href="#contact" class="c-btn ms-4 py-2 px-4 rounded-pill d-none d-md-block">
+          Contact
+        </a>
+      </div>
+    </nav>
+
+    <!-- Background Music Audio -->
+    <!-- <audio id="bg-music" src="music/music.mp3" autoplay loop></audio> -->
+
+    <!-- Mute/Unmute Toggle Button -->
+    <!-- <button id="music-toggle">🔊 Mute</button> -->
+
+    <!-- navbar ends -->
+
+    <!-- home section starts -->
+    <section class="home pt-5 pb-5" id="home">
+      <div class="container">
+        <div class="row justify-content-evenly align-items-center">
+          <!-- Text Column -->
+          <div class="col-10 col-md-6 text-center text-md-start" data-aos="slide-right">
+            <h2>
+              Hello! I Am <br />
+              <span class="c-orange">Subhanshu Sinha</span>
+            </h2>
+
+            <!-- Optional Typing Effect -->
+            <h4 class="typing-text mt-2">
+              <span id="typing-animation"></span><span class="cursor">|</span>
+            </h4>
+
+            <p class="text-muted text-justify">
+              🚀 Detail-oriented engineering student currently pursuing a 
+              Bachelor of Engineering in Information Security. Passionate 
+              about cybersecurity and full-stack web development, with a 
+              strong foundation in secure coding practices, web technologies, 
+              and network security. Eager to contribute to real-world projects, 
+              enhance system security, and build scalable applications. A quick 
+              learner with a commitment to continuous growth in the fields of 
+              cyber defense and software development. 👨‍💻💡
+            </p>
+
+            <!-- Button Group -->
+            <div class="button-group mt-4">
+              <a 
+                href="https://github.com/Subhanshusinha"
+                target="_blank"
+                class="c-btn h-btn"
+              >
+                My Work
+              </a>
+
+              <a href="#portfolio" class="read-my-work-btn">Read My Work</a>
+            </div>
+          </div>
+
+          <!-- Image Column -->
+          <div class="col-10 col-md-4 d-none d-md-block" data-aos="slide-left">
+            <img 
+              src="images/profile_pic.png" 
+              class="img-fluid profile-pic" 
+              alt="Profile of Subhanshu Sinha" 
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- home section ends here -->
+
+    <!-- Expertise Section Starts -->
+<section class="expertise section-padding" id="service">
+  <div class="heading text-center mb-5">
+    <small class="section-subtitle">🔧 Tools I Work With</small>
+    <h3 class="section-title">My Expertise</h3>
+  </div>
+
+  <div class="row justify-content-center gx-4 gy-4">
+    <!-- Cyber Security -->
+    <div class="col-md-4 col-10" data-aos="fade-up">
+      <div class="service-card text-center h-100">
+        <img src="images/service-icon1.png" alt="Cyber Security Icon" class="service-icon mb-3" />
+        <h4>Cyber Security</h4>
+        <p class="text-muted">
+          🛡️ Defender of digital realms—skilled in securing systems, 
+          identifying threats, and fortifying networks against cyberattacks.
+        </p>
+      </div>
+    </div>
+
+    <!-- Full Stack Development -->
+    <div class="col-md-4 col-10" data-aos="fade-up">
+      <div class="service-card text-center h-100">
+        <img src="images/service-icon2.png" alt="Full Stack Icon" class="service-icon mb-3" />
+        <h4>Full Stack Development</h4>
+        <p class="text-muted">
+          🌐 I craft responsive websites blending front-end elegance with 
+          back-end power to deliver seamless, secure web experiences.
+        </p>
+      </div>
+    </div>
+
+    <!-- Debugging -->
+    <div class="col-md-4 col-10" data-aos="fade-up">
+      <div class="service-card text-center h-100">
+        <img src="images/service-icon3.png" alt="Debugging Icon" class="service-icon mb-3" />
+        <h4>Debugging</h4>
+        <p class="text-muted">
+          🔍 Meticulous bug hunter — transforming glitches into clean, 
+          functional code through deep analysis and precision fixes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Expertise Section Ends -->
+
+<!-- skill section starts -->
+<section class="skill py-5" id="about">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="heading text-center mb-5">
+      <h1>My Skills</h1>
+      <h3>Crafting Secure and Scalable Digital Solutions</h3>
+    </div>
+
+    <!-- Skill Content -->
+    <div class="row justify-content-center align-items-start">
+
+      <!-- Skill List Box -->
+      <div class="col-10 col-md-6 mb-4 mb-md-0" data-aos="slide-right">
+        <div class="skills-box">
+          <div class="skills-list">
+            <h4>Programming Languages:</h4>
+            <p>C++, JavaScript, HTML5, CSS3</p>
+
+            <h4>Web Technologies:</h4>
+            <p>React, Bootstrap, Node.js, Express.js, MongoDB</p>
+
+            <h4>Cybersecurity Tools:</h4>
+            <p>Kali Linux, Nmap, Wireshark, JWT Authentication, Web Application Penetration Testing, Ethical Hacking</p>
+
+            <h4>Development Tools:</h4>
+            <p>Git, GitHub, Visual Studio Code</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill Description and CV Button -->
+      <div class="col-10 col-md-6" data-aos="slide-left">
+        <div class="heading mt-5 mt-md-3">
+          <p class="text-muted text-justify mt-3">
+            💻 I specialize in building secure, responsive, and scalable 
+            web applications using modern technologies like MERN stack, 
+            Bootstrap, and REST APIs. 🔐 With a strong foundation in cybersecurity 
+            and digital forensics, I bring an analytical mindset to every 
+            project — from writing clean code in C++ and JavaScript 🧠 to 
+            detecting vulnerabilities using tools like Kali Linux and Wireshark. 
+            🕵️‍♂️ My approach blends technical expertise with a passion for problem-solving 
+            to deliver robust and innovative digital experiences. 🚀
+          </p>
+
+          <!-- Download CV Button -->
+          <button class="c-btn h-btn mt-4 py-3 px-5 rounded-pill">
+            <a
+              href="Subhanshu Sinha_Resume.pdf"
+              download="My_Resume"
+              style="text-decoration: none; color: #fff"
+            >
+              Download Resume
+            </a>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- skill section end here -->
+
+<!-- Portfolio Section Starts  ==  Using JavaScript-->
+ <section class="portfolio" id="portfolio">
+      <div class="container">
+        <div class="heading text-center">
+          <h3>Check My Portfolio</h3>
+        </div>
+        <div id="portfolio-container"></div>
+      </div>
+    </section>
+</section>
+
+<!-- Using HTML manually create project -->
+<!-- <section class="portfolio" id="portfolio">
+  <div class="heading text-center pt-5">
+    <small>Creative Work</small>
+    <h3>Check My Portfolio</h3>
+  </div>
+
+  <div class="portfolio-body container"> -->
+
+    <!-- Row 1: 2 Projects -->
+    <!-- <div class="row justify-content-center"> -->
+      <!-- Project 1 -->
+      <!-- <div class="post col-md-6 col-10 mt-4" data-aos="fade-up">
+        <div class="card">
+          <img src="images/portfolio.jpg" class="card-img-top" alt="Portfolio Website" />
+          <div class="card-body text-center">
+            <h4 class="card-title">Portfolio Website</h4>
+            <span class="badge">HTML&CSS</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge mb-2">Website</span><br />
+            <a href="https://github.com/Subhanshusinha/Image-Steganography-Tool" target="_blank" class="read-more-btn link">Read More</a>
+          </div>
+        </div>
+      </div> -->
+<!-- Portfolio Section Ends -->
+ 
+<!-- testimonial ends here -->
+
+<!-- blog section starts -->
+
+<!-- blog section ends here -->
+
+<!-- contact section starts -->
+<section class="contact py-5" id="contact">
+  <div class="heading text-center mb-5">
+    <small>Get in Touch</small>
+    <h3>Any Questions? Feel Free to Contact</h3>
+  </div>
+
+  <div class="row justify-content-center align-items-start gx-5">
+    <!-- Left: Contact Details -->
+    <div class="col-md-5 col-10 contact-details p-4 rounded shadow-sm" data-aos="slide-right">
+      <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <i class="bi bi-geo-alt-fill text-warning fs-5"></i>
+        </div>
+        <div class="col">
+          <p class="contact-text">Punjab-140413</p>
+        </div>
+      </div>
+      <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <i class="bi bi-telephone-fill text-warning fs-5"></i>
+        </div>
+        <div class="col">
+          <p class="contact-text">+91 9608895008</p>
+        </div>
+      </div>
+      <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <i class="bi bi-send-fill text-warning fs-5"></i>
+        </div>
+        <div class="col">
+          <p class="contact-text">subhanshu.sinha667@gmail.com</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="col-md-5 col-10 mt-4 mt-md-0" data-aos="slide-left">
+      <div class="contact-box">
+        <form action="https://formsubmit.co/subhanshu.sinha889@gmail.com" method="POST" class="contact-form">
+          <input type="hidden" name="_captcha" value="false" />
+
+          <div class="mb-3">
+            <input type="text" class="form-control" name="name" placeholder="Name" required />
+          </div>
+
+          <div class="mb-3">
+            <input type="email" class="form-control" name="email" placeholder="E-mail" required />
+          </div>
+
+          <div class="mb-3">
+            <input type="text" class="form-control" name="phone" placeholder="Mobile No. (optional — only if you want me to contact you)" />
+          </div>
+
+          <div class="mb-3">
+            <textarea class="form-control" name="message" placeholder="Message" rows="5"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label id="captcha-question" for="captcha">Loading...</label>
+            <input type="text" id="captcha" class="form-control" placeholder="Answer here" required />
+            <small id="captcha-error" style="color: red; display: none;">Wrong answer! Please try again.</small>
+          </div>
+
+          <button class="c-btn h-btn mt-3 py-3 px-5 rounded-pill" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Back to Top Button -->
+<button type="button" class="btn btn-floating btn-lg rounded-pill" id="btn-back-to-top">
+  <i class="bi bi-arrow-up"></i>
+</button>
+
+<!-- Quote Section -->
+<div class="quote-box text-center py-4" id="quote-box">
+  <h4 id="dev-quote" class="quote-text text-white"></h4>
+</div>
+
+<!-- Footer Section Starts -->
+<footer class="footer">
+  <h3 class="footer-title" data-aos="fade-up">Subhanshu Sinha - Portfolio</h3>
+
+  <!-- Navigation Links -->
+  <div class="footer-links" data-aos="fade-up">
+    <a href="#home">Home</a>
+    <div class="vr"></div>
+    <a href="#about">About</a>
+    <div class="vr"></div>
+    <a href="#portfolio">Portfolio</a>
+    <div class="vr"></div>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Social Icons -->
+  <div class="social-links" data-aos="fade-up">
+    <!-- GitHub -->
+    <a href="https://github.com/Subhanshusinha" class="social-icon" target="_blank">
+      <i class="bi bi-github"></i>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/subhanshu-sinha-43029224a/" class="social-icon" target="_blank">
+      <i class="bi bi-linkedin"></i>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/subhanshusinha2?igsh=MXFxd3pvcjU3ZzRpYQ==&utm_source=ig_contact_invite" class="social-icon" target="_blank">
+      <i class="bi bi-instagram"></i>
+    </a>
+  </div>
+
+  <!-- Copyright -->
+  <hr class="footer-line" />
+  <p class="footer-copy">© 2025 Subhanshu Sinha • All Rights Reserved</p>
+</footer>
+
+<!-- Footer Section Ends -->
+
+<!-- Bootstrap JavaScript CDN -->
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+  crossorigin="anonymous">
+</script>
+
+<!-- Portfolio Section Starts -->
+<!-- === AOS (Animate On Scroll) Library Script === -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script>
+  // === Initialize AOS Library ===
+  AOS.init({
+    duration: 800, // Animation duration in milliseconds (0.8 seconds)
+    once: false     // Whether animation should happen only once while scrolling down
+  });
+</script>
+
+
+<!-- Custom JS File -->
+<script src="js/script.js"></script>
+  </body>
+</html>
