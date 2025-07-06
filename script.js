@@ -176,7 +176,7 @@ const projects = [
     title: "Portfolio Website",
     image: "images/project1.jpg",
     tech: ["HTML&CSS", "JavaScript", "Website"],
-    link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
+    link: "https://github.com/Subhanshusinha/Portfolio-Subhanshu-Sinha"
   },
   {
     title: "Image Steganography Tool",
@@ -185,10 +185,10 @@ const projects = [
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
   {
-    title: "Cybersecurity Scanner",
+    title: "Secure Verse",
     image: "images/project3.jpg",
-    tech: ["Node.js", "Express", "MongoDB"],
-    link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
+    tech: ["JavaScript", "Cyber Security"],
+    link: "https://github.com/Subhanshusinha/Secure-Verse"
   }
 ];
 
