@@ -180,7 +180,7 @@ const projects = [
   },
   {
     title: "Image Steganography Tool",
-    image: "images/project2.jpg",
+    image: "images/Project2.jpg",
     tech: ["HTML&CSS", "JavaScript", "Canvas API", "Web Crypto API"],
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
