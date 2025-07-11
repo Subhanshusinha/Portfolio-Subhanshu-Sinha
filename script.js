@@ -189,6 +189,11 @@ const projects = [
     image: "images/project3.jpg",
     tech: ["JavaScript", "Cyber Security"],
     link: "https://github.com/Subhanshusinha/Secure-Verse"
+  },
+  {
+    title: "FocusFlow – All-in-One Productivity Dashboard",
+    image: "images/project4.jpg",
+    link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
   }
 ];
 
