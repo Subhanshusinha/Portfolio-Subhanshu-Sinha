@@ -192,7 +192,7 @@ const projects = [
   },
   {
     title: "FocusFlow – All-in-One Productivity Dashboard",
-    image: "images/project4.jpg",
+    image: "images/project4.png",
     tech: [],
     link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
   }
