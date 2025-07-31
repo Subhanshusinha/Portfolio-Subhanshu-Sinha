@@ -180,7 +180,7 @@ const projects = [
   },
   {
     title: "SecureBox – File Integrity Checker Web App",
-    image: "images/Project2.jpg",
+    image: "images/Project5.png",
     tech: ["React", "Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
     link: "https://github.com/Subhanshusinha/SecureBox-File-Integrity-Checker"
   },
