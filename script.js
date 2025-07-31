@@ -179,6 +179,12 @@ const projects = [
     link: "https://github.com/Subhanshusinha/Portfolio-Subhanshu-Sinha"
   },
   {
+    title: "SecureBox – File Integrity Checker Web App",
+    image: "images/Project2.jpg",
+    tech: ["React", "Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
+    link: "https://github.com/Subhanshusinha/SecureBox-File-Integrity-Checker"
+  },
+  {
     title: "Image Steganography Tool",
     image: "images/Project2.jpg",
     tech: ["HTML&CSS", "JavaScript", "Canvas API", "Web Crypto API"],
