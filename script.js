@@ -181,13 +181,13 @@ const projects = [
   {
     title: "SecureBox – File Integrity Checker Web App",
     image: "images/Project5.png",
-    tech: ["React", "Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
+    tech: ["Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
     link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
   },
   {
     title: "Image Steganography Tool",
     image: "images/Project2.jpg",
-    tech: ["Bootstrap", "JavaScript", "Node.js & Express.js", "Crypto", "Multer"],
+    tech: ["HTML&CSS", "JavaScript", "Node.js & Express.js", "Crypto"],
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
   {
