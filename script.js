@@ -182,12 +182,12 @@ const projects = [
     title: "SecureBox – File Integrity Checker Web App",
     image: "images/Project5.png",
     tech: ["React", "Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
-    link: "https://github.com/Subhanshusinha/SecureBox-File-Integrity-Checker"
+    link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
   },
   {
     title: "Image Steganography Tool",
     image: "images/Project2.jpg",
-    tech: ["HTML&CSS", "JavaScript", "Canvas API", "Web Crypto API"],
+    tech: ["Bootstrap", "JavaScript", "Node.js & Express.js", "Crypto", "Multer"],
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
   {
@@ -244,4 +244,5 @@ while (index < projects.length) {
 if (typeof AOS !== 'undefined') {
   AOS.refresh();  // Re-initialize AOS after dynamic content is injected
 }
+
 
