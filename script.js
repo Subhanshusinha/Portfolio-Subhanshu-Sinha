@@ -1,3 +1,59 @@
+/* ========================================
+   PRELOADER ANIMATION
+   ======================================== */
+window.addEventListener('load', function () {
+  const preloader = document.getElementById('preloader');
+
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+
+    // Remove immediately after hidden
+    setTimeout(() => {
+      preloader.style.display = 'none';
+    }, 0);
+
+  }, 500); // exactly 1 second
+});
+
+/* ========================================
+   SCROLL PROGRESS BAR
+   ======================================== */
+window.addEventListener('scroll', function () {
+  const scrollProgress = document.getElementById('scroll-progress');
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrollPercentage = (scrollTop / scrollHeight) * 100;
+  scrollProgress.style.width = scrollPercentage + '%';
+});
+
+/* ========================================
+   CUSTOM CURSOR
+   ======================================== */
+document.addEventListener('DOMContentLoaded', function () {
+  const cursor = document.querySelector('.custom-cursor');
+  const cursorTrail = document.querySelector('.cursor-trail');
+
+  // Update cursor position
+  document.addEventListener('mousemove', function (e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    // Trail follows with delay
+    setTimeout(() => {
+      cursorTrail.style.left = e.clientX + 'px';
+      cursorTrail.style.top = e.clientY + 'px';
+      cursorTrail.style.transform = 'translate(-50%, -50%)';
+    }, 50);
+  });
+
+  // Add hover effect on interactive elements
+  const interactiveElements = document.querySelectorAll('a, button, .card, input, textarea');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+});
+
 // === Portfolio Filter Using jQuery ===
 // Used when clicking filter buttons (if filter UI is present, currently not in your HTML)
 $(document).ready(function () {
@@ -89,6 +145,101 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(type, 500);
 });
 
+/* ========================================
+   PARTICLES.JS CONFIGURATION
+   ======================================== */
+if (document.getElementById('particles-js')) {
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 80,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: ['#ffffff', '#fca61f', '#6f34fe']
+      },
+      shape: {
+        type: 'circle',
+        stroke: {
+          width: 0,
+          color: '#000000'
+        }
+      },
+      opacity: {
+        value: 0.5,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 4,
+          size_min: 0.3,
+          sync: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: '#ffffff',
+        opacity: 0.4,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: 'none',
+        random: false,
+        straight: false,
+        out_mode: 'out',
+        bounce: false,
+        attract: {
+          enable: false,
+          rotateX: 600,
+          rotateY: 1200
+        }
+      }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: {
+          enable: true,
+          mode: 'grab'
+        },
+        onclick: {
+          enable: true,
+          mode: 'push'
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 140,
+          line_linked: {
+            opacity: 1
+          }
+        },
+        push: {
+          particles_nb: 4
+        }
+      }
+    },
+    retina_detect: true
+  });
+}
+
+
 /* === Back to Top Button === */
 // HTML: <button id="btn-back-to-top"><i class="bi bi-arrow-up"></i></button>
 let mybutton = document.getElementById("btn-back-to-top");
@@ -115,50 +266,74 @@ mybutton.addEventListener("click", function () {
 
 /* === Contact Section CAPTCHA === */
 // HTML: #captcha-question, #captcha, #captcha-error inside contact form
+
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("form");
+  const form = document.getElementById("contactForm");
   const captchaQuestion = document.getElementById("captcha-question");
   const captchaInput = document.getElementById("captcha");
   const errorText = document.getElementById("captcha-error");
 
+  // Generate numbers
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
   const correctAnswer = num1 + num2;
 
+  // Show question
   captchaQuestion.textContent = `What is ${num1} + ${num2}?`;
 
-  if (form && captchaInput && errorText) {
-    form.addEventListener("submit", function (e) {
-      if (parseInt(captchaInput.value.trim()) !== correctAnswer) {
-        e.preventDefault();
-        errorText.style.display = "block";
-      } else {
-        errorText.style.display = "none";
-      }
-    });
-  }
+  // Validate on submit
+  form.addEventListener("submit", function (e) {
+    if (parseInt(captchaInput.value.trim()) !== correctAnswer) {
+      e.preventDefault();
+      errorText.style.display = "block";
+    } else {
+      errorText.style.display = "none";
+    }
+  });
 });
 
-/* === Developer Quotes Box === */
-// HTML: <h4 id="dev-quote" class="quote-text"></h4>
+
+/* === Developer Quotes Box (Rotating) === */
 document.addEventListener("DOMContentLoaded", () => {
   const quotes = [
-    "Code is poetry. Every line tells a story.",
-    "Crafting solutions. One bug at a time.",
-    "Think logically. Code creatively.",
-    "Secure. Scalable. Smart.",
-    "Design. Develop. Deploy. Dominate.",
-    "Clean code is a form of self-respect.",
-    "In a world of variables, be a constant.",
-    "Every pixel has a purpose.",
-    "I don’t just build websites. I build experiences.",
-    "The best way to predict the future is to code it."
+    "Security is not a feature, it’s a mindset.",
+    "Protect first. Build smart. Scale securely.",
+    "Cybersecurity starts where trust ends.",
+    "Every secure system begins with clean code.",
+    "Think like an attacker. Defend like an engineer.",
+    "Strong security is built, not assumed.",
+    "Secure code today prevents breaches tomorrow.",
+    "Behind every secure system is disciplined logic.",
+    "Building systems that are secure by design.",
+    "Code with purpose. Defend with precision."
   ];
 
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   const quoteElement = document.getElementById("dev-quote");
+
   if (quoteElement) {
-    quoteElement.textContent = `"${randomQuote}"`;
+    let index = 0;
+
+    // Initial Quote
+    quoteElement.textContent = `"${quotes[0]}"`;
+    // Add visible class after a short delay to trigger initial animation if needed, or immediately
+    requestAnimationFrame(() => quoteElement.classList.add('visible'));
+
+    // Rotate with beautiful animation
+    setInterval(() => {
+      // Exit animation
+      quoteElement.classList.remove('visible');
+      quoteElement.classList.add('hidden');
+
+      setTimeout(() => {
+        index = (index + 1) % quotes.length;
+        quoteElement.textContent = `"${quotes[index]}"`;
+
+        // precise timing to reset position without animation if needed, 
+        // but here we want smooth entry from bottom
+        quoteElement.classList.remove('hidden');
+        quoteElement.classList.add('visible');
+      }, 800); // Matches CSS transition duration
+    }, 4000); // More time to read
   }
 });
 
@@ -174,76 +349,75 @@ window.onload = () => {
 const projects = [
   {
     title: "Portfolio Website",
-    image: "images/project1.jpg",
+    image: "images/project1.png",
     tech: ["HTML&CSS", "JavaScript", "Website"],
     link: "https://github.com/Subhanshusinha/Portfolio-Subhanshu-Sinha"
   },
   {
-    title: "SecureBox – File Integrity Checker Web App",
-    image: "images/Project5.png.png",
+    title: "ShieldHub - Protection In One Hub",
+    image: "images/Project2.png",
+    tech: ["Node.js", "Express.js", "Ejs","MongoDB","Cyber security", "Digital Forensics"],
+    link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
+  },
+  {
+    title: "SecureBox - File Integrity Checker Web App",
+    image: "images/Project3.png",
     tech: ["Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
     link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
   },
   {
     title: "Image Steganography Tool",
-    image: "images/Project2.jpg",
+    image: "images/Project4.jpg",
     tech: ["HTML&CSS", "JavaScript", "Node.js & Express.js", "Crypto"],
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
   {
-    title: "Secure Verse",
-    image: "images/project3.jpg",
-    tech: ["JavaScript", "Cyber Security"],
-    link: "https://github.com/Subhanshusinha/Secure-Verse"
-  },
-  {
-    title: "FocusFlow – All-in-One Productivity Dashboard",
-    image: "images/project4.png",
-    tech: [],
+    title: "FocusFlow - All-in-One Productivity Dashboard",
+    image: "images/project5.png",
+    tech: ["HTML&CSS", "JavaScript", "Bootstrap"],
     link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
   }
 ];
 
-// === Layout Logic ===
-const pattern = [2, 2];
-const container = document.getElementById("portfolio-container");
-let index = 0;
+// === Layout Logic (CSS Grid) ===
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("portfolio-container");
 
-while (index < projects.length) {
-  for (let size of pattern) {
-    const row = document.createElement("div");
-    row.className = "row justify-content-evenly mb-4";
+  if (container) {
+    container.className = "projects-grid"; // Enable Grid
 
-    for (let i = 0; i < size && index < projects.length; i++, index++) {
-      const project = projects[index];
+    projects.forEach((project, index) => {
+      const card = document.createElement("article");
+      card.className = "project-card";
+      card.setAttribute("data-aos", "fade-up");
+      card.setAttribute("data-aos-delay", index * 100); // Stagger animations
 
-      const col = document.createElement("div");
-      col.className = "col-md-4 col-10 mt-3";
-
-      col.innerHTML = `
-        <div class="card" data-aos="zoom-in">
-          <img src="${project.image}" class="card-img-top" alt="${project.title}" />
-          <div class="card-body">
-            <h4 class="card-title">${project.title}</h4>
-            ${project.tech.map(t => `<span class="badge">${t}</span>`).join("")}
-            <br />
-            <a href="${project.link}" target="_blank" class="read-more-btn">Read More</a>
+      card.innerHTML = `
+        <div class="project-img-wrapper">
+          <img src="${project.image}" alt="${project.title}" loading="lazy" />
+        </div>
+        <div class="project-info">
+          <div class="project-meta">
+            ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join("")}
           </div>
+          <h3 class="project-title">${project.title}</h3>
+          <a href="${project.link}" target="_blank" class="btn-view-project">
+            View Project <i class="bi bi-arrow-right-short"></i>
+          </a>
         </div>
       `;
 
-      row.appendChild(col);
+      container.appendChild(card);
+    });
+
+    // Refresh AOS after adding elements
+    if (typeof AOS !== 'undefined') {
+      setTimeout(() => AOS.refresh(), 500); // Small delay to ensure rendering
     }
-
-    container.appendChild(row);
-    if (index >= projects.length) break;
+  } else {
+    console.error("Portfolio container not found!");
   }
-}
-
-// ✅ This is the KEY FIX:
-if (typeof AOS !== 'undefined') {
-  AOS.refresh();  // Re-initialize AOS after dynamic content is injected
-}
+});
 
 
 
