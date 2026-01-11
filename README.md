@@ -23,7 +23,7 @@ Welcome to my personal portfolio website! This project showcases my skills, proj
 
 ## 📸 Live Demo
 
-🔗 [View Portfolio Live](https://yourusername.github.io/your-repo-name/)  
+🔗 [View Portfolio Live](https://subhanshusinha.github.io/Portfolio-Subhanshu-Sinha/)  
 
 ---
 
