@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /* === Typing Animation (Home Section) === */
 // HTML: <span id="typing-animation"></span>
 const typingAnimationElement = document.getElementById("typing-animation");
-const typingTexts = ["Cyber Security", "Full Stack Developer"];
+const typingTexts = ["Cyber Security", "Backend Developer"];
 let textIndex = 0;
 let charIndex = 0;
 
@@ -349,7 +349,7 @@ window.onload = () => {
 const projects = [
   {
     title: "Portfolio Website",
-    image: "images/project1.png",
+    image: "images/Project1.png",
     tech: ["HTML&CSS", "JavaScript", "Website"],
     link: "https://github.com/Subhanshusinha/Portfolio-Subhanshu-Sinha"
   },
@@ -373,7 +373,7 @@ const projects = [
   },
   {
     title: "FocusFlow - All-in-One Productivity Dashboard",
-    image: "images/project5.png",
+    image: "images/Project5.png",
     tech: ["HTML&CSS", "JavaScript", "Bootstrap"],
     link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
   }
@@ -418,6 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Portfolio container not found!");
   }
 });
+
 
 
 
