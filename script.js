@@ -367,7 +367,7 @@ const projects = [
   },
   {
     title: "Image Steganography Tool",
-    image: "images/Project4.jpg",
+    image: "images/Project4.png",
     tech: ["HTML&CSS", "JavaScript", "Node.js & Express.js", "Crypto"],
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
@@ -418,6 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Portfolio container not found!");
   }
 });
+
 
 
 
