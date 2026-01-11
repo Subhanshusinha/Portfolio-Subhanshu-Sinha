@@ -357,7 +357,7 @@ const projects = [
     title: "ShieldHub - Protection In One Hub",
     image: "images/Project2.png",
     tech: ["Node.js", "Express.js", "Ejs","MongoDB","Cyber security", "Digital Forensics"],
-    link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
+    link: "https://github.com/Subhanshusinha/ShieldHub-Protection-In-One-Hub"
   },
   {
     title: "SecureBox - File Integrity Checker Web App",
@@ -418,6 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Portfolio container not found!");
   }
 });
+
 
 
 
