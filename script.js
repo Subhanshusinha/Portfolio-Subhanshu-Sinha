@@ -1,426 +1,681 @@
 /* ========================================
-   PRELOADER ANIMATION
+   INITIALIZATION & SMOOTH SCROLL (LENIS)
    ======================================== */
-window.addEventListener('load', function () {
-  const preloader = document.getElementById('preloader');
-
-  setTimeout(() => {
-    preloader.classList.add('hidden');
-
-    // Remove immediately after hidden
-    setTimeout(() => {
-      preloader.style.display = 'none';
-    }, 0);
-
-  }, 500); // exactly 1 second
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smooth: true,
 });
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Integrate GSAP with Lenis
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
+
+// Update ScrollTrigger on Lenis scroll
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+});
+gsap.ticker.lagSmoothing(0);
+
 
 /* ========================================
    SCROLL PROGRESS BAR
    ======================================== */
-window.addEventListener('scroll', function () {
-  const scrollProgress = document.getElementById('scroll-progress');
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const scrollPercentage = (scrollTop / scrollHeight) * 100;
-  scrollProgress.style.width = scrollPercentage + '%';
+const scrollProgress = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (scrollProgress) scrollProgress.style.width = progress + '%';
 });
 
 /* ========================================
-   CUSTOM CURSOR
+   BACK TO TOP BUTTON
    ======================================== */
-document.addEventListener('DOMContentLoaded', function () {
-  const cursor = document.querySelector('.custom-cursor');
-  const cursorTrail = document.querySelector('.cursor-trail');
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (backToTop) {
+    if (window.scrollY > 400) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
+});
+if (backToTop) {
+  backToTop.addEventListener('click', () => {
+    lenis.scrollTo(0, { duration: 1.5 });
+  });
+}
 
-  // Update cursor position
-  document.addEventListener('mousemove', function (e) {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+/* ========================================
+   DARK / LIGHT THEME TOGGLE
+   ======================================== */
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+let isLight = false;
 
-    // Trail follows with delay
-    setTimeout(() => {
-      cursorTrail.style.left = e.clientX + 'px';
-      cursorTrail.style.top = e.clientY + 'px';
-      cursorTrail.style.transform = 'translate(-50%, -50%)';
-    }, 50);
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    isLight = !isLight;
+    document.body.classList.toggle('light-theme', isLight);
+    themeIcon.className = isLight ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
+  });
+}
+
+/* ========================================
+   COUNTER ANIMATION ON STATS
+   ======================================== */
+const statNumbers = document.querySelectorAll('.stat-number');
+if (statNumbers.length) {
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-target'));
+        const suffix = el.getAttribute('data-suffix') || '+';
+        let count = 0;
+        const step = Math.ceil(target / 40);
+        const interval = setInterval(() => {
+          count += step;
+          if (count >= target) {
+            count = target;
+            clearInterval(interval);
+          }
+          el.textContent = count + suffix;
+        }, 40);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNumbers.forEach(el => countObserver.observe(el));
+}
+
+
+// Magnetic Button Effect
+const magneticBtns = document.querySelectorAll('.magnetic-btn');
+
+magneticBtns.forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const h = rect.width / 2;
+    const v = rect.height / 2;
+    const x = e.clientX - rect.left - h;
+    const y = e.clientY - rect.top - v;
+    
+    gsap.to(btn, {
+      x: x * 0.4,
+      y: y * 0.4,
+      duration: 0.3,
+      ease: "power2.out"
+    });
   });
 
-  // Add hover effect on interactive elements
-  const interactiveElements = document.querySelectorAll('a, button, .card, input, textarea');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  btn.addEventListener('mouseleave', () => {
+    gsap.to(btn, { x: 0, y: 0, duration: 0.3, ease: "power2.out" });
   });
 });
 
-// === Portfolio Filter Using jQuery ===
-// Used when clicking filter buttons (if filter UI is present, currently not in your HTML)
-$(document).ready(function () {
-  $(".filter-item").click(function () {
-    const value = $(this).attr("data-filter");
-    if (value == "all") {
-      $(".post").show("1000");
-    } else {
-      $(".post").not("." + value).hide("1000");
-      $(".post").filter("." + value).show("1000");
+
+/* ========================================
+   PRELOADER & INITIAL ANIMATION
+   ======================================== */
+window.addEventListener('load', () => {
+  // Hide navbar initially
+  gsap.set('.navbar', { y: -100, opacity: 0 });
+
+  const tl = gsap.timeline();
+  const preloaderText = document.getElementById("preloader-text");
+  const preloaderBoy = document.getElementById("preloader-boy");
+
+  tl.to('#preloader-fill', { width: '100%', duration: 1.2, ease: "power2.inOut", onComplete: () => {
+        if (preloaderText && preloaderBoy) {
+          preloaderText.innerHTML = "Welcome to Subhanshu's Portfolio!";
+          preloaderText.style.color = "#fca61f";
+
+          // Raise right arm for wave
+          const rightArm = preloaderBoy.querySelector('.boy-arm.right');
+          if (rightArm) {
+            rightArm.style.animation = 'none';
+            gsap.to(rightArm, { rotation: -130, duration: 0.4, ease: "back.out(2)" });
+          }
+        }
     }
-  });
+  })
+  .to({}, { duration: 0.5 })
+  .to('.preloader', { yPercent: -100, duration: 0.5, ease: "power4.inOut" })
+  .from('.badge-wrapper', { y: 20, opacity: 0, duration: 0.5 }, "-=0.4")
+  .from('.hero-title', { y: 30, opacity: 0, duration: 0.6 })
+    .from('.hero-subtitle', { opacity: 0, duration: 0.5 })
+    .from('.hero-desc', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
+    .from('.hero-btns', { y: 20, opacity: 0, duration: 0.5 })
+    .from('.hero-img', { scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "-=1")
+    .from('.floating-badge', { scale: 0, opacity: 0, stagger: 0.2, duration: 0.5, ease: "back.out(2)" }, "-=0.5");
+
+  // Slide navbar down after 5 seconds
+  setTimeout(() => {
+    gsap.to('.navbar', { y: 0, opacity: 1, duration: 1, ease: "bounce.out" });
+  }, 5000);
 });
 
-/* === Sticky Navbar === */
-// Used to make navbar stick to top and push content down when scrolled
-document.addEventListener("DOMContentLoaded", function () {
-  window.addEventListener("scroll", function () {
-    if (window.scrollY > 50) {
-      document.getElementById("navbar-top").classList.add("fixed-top");
-      const navbar_height = document.querySelector(".navbar").offsetHeight;
-      document.body.style.paddingTop = navbar_height + "px";
-    } else {
-      document.getElementById("navbar-top").classList.remove("fixed-top");
-      document.body.style.paddingTop = "0";
-    }
-  });
-});
-
-// =================================
-/* Script to autoplay background music and toggle mute/unmute with a button
-document.addEventListener("DOMContentLoaded", function () {
-  const music = document.getElementById("bg-music");
-  const toggleBtn = document.getElementById("music-toggle");
-
-  if (!music || !toggleBtn) return;
-
-  // Set initial volume
-  music.volume = 0.2;
-
-  // Autoplay fix for browsers (requires user interaction)
-  document.body.addEventListener("click", () => {
-    music.play().catch(() => {});
-  }, { once: true });
-
-  // Toggle mute/unmute when button is clicked
-  toggleBtn.addEventListener("click", () => {
-    if (music.muted) {
-      music.muted = false;
-      toggleBtn.textContent = "🔊 Mute";
-    } else {
-      music.muted = true;
-      toggleBtn.textContent = "🔇 Unmute";
-    }
-  });
-});   */
-
-
-
-/* === Typing Animation (Home Section) === */
-// HTML: <span id="typing-animation"></span>
-const typingAnimationElement = document.getElementById("typing-animation");
-const typingTexts = ["Cyber Security", "Backend Developer"];
+/* ========================================
+   TYPEWRITER EFFECT
+   ======================================== */
+const typingTexts = ["Cyber Security Enthusiast", "Secure Backend Developer", "Problem Solver"];
 let textIndex = 0;
 let charIndex = 0;
+const typeWriterElement = document.getElementById("typewriter");
 
 function type() {
   if (charIndex < typingTexts[textIndex].length) {
-    typingAnimationElement.textContent += typingTexts[textIndex].charAt(charIndex);
+    typeWriterElement.textContent += typingTexts[textIndex].charAt(charIndex);
     charIndex++;
     setTimeout(type, 100);
   } else {
-    setTimeout(erase, 1200);
+    setTimeout(erase, 2000);
   }
 }
 
 function erase() {
   if (charIndex > 0) {
-    typingAnimationElement.textContent = typingAnimationElement.textContent.slice(0, -1);
+    typeWriterElement.textContent = typeWriterElement.textContent.slice(0, -1);
     charIndex--;
-    setTimeout(erase, 100);
+    setTimeout(erase, 50);
   } else {
     textIndex = (textIndex + 1) % typingTexts.length;
     setTimeout(type, 300);
   }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(type, 500);
-});
+setTimeout(type, 3000); // Start after preloader
 
 /* ========================================
-   PARTICLES.JS CONFIGURATION
+   SKILLS DATA & RENDER
    ======================================== */
-if (document.getElementById('particles-js')) {
-  particlesJS('particles-js', {
-    particles: {
-      number: {
-        value: 80,
-        density: {
-          enable: true,
-          value_area: 800
-        }
-      },
-      color: {
-        value: ['#ffffff', '#fca61f', '#6f34fe']
-      },
-      shape: {
-        type: 'circle',
-        stroke: {
-          width: 0,
-          color: '#000000'
-        }
-      },
-      opacity: {
-        value: 0.5,
-        random: true,
-        anim: {
-          enable: true,
-          speed: 1,
-          opacity_min: 0.1,
-          sync: false
-        }
-      },
-      size: {
-        value: 3,
-        random: true,
-        anim: {
-          enable: true,
-          speed: 4,
-          size_min: 0.3,
-          sync: false
-        }
-      },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: '#ffffff',
-        opacity: 0.4,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 2,
-        direction: 'none',
-        random: false,
-        straight: false,
-        out_mode: 'out',
-        bounce: false,
-        attract: {
-          enable: false,
-          rotateX: 600,
-          rotateY: 1200
-        }
-      }
-    },
-    interactivity: {
-      detect_on: 'canvas',
-      events: {
-        onhover: {
-          enable: true,
-          mode: 'grab'
-        },
-        onclick: {
-          enable: true,
-          mode: 'push'
-        },
-        resize: true
-      },
-      modes: {
-        grab: {
-          distance: 140,
-          line_linked: {
-            opacity: 1
-          }
-        },
-        push: {
-          particles_nb: 4
-        }
-      }
-    },
-    retina_detect: true
+const skillsData = [
+  {
+    category: "Programming",
+    tags: ["Python Scripting", "JavaScript"]
+  },
+  {
+    category: "Cybersecurity",
+    tags: ["SOC", "SIEM", "Digital Forensics", "Kali Linux", "Wireshark"]
+  },
+  {
+    category: "Backend Development",
+    tags: ["Node.js", "Express.js", "EJS", "MongoDB"]
+  },
+  {
+    category: "CS Fundamentals & Others",
+    tags: ["Computer Networking", "SQL", "Git"]
+  }
+];
+
+const skillsContainer = document.getElementById("skills-container");
+
+if (skillsContainer) {
+  skillsData.forEach(skillSet => {
+    const categoryDiv = document.createElement("div");
+    categoryDiv.className = "skill-category";
+    
+    categoryDiv.innerHTML = `
+      <h5>${skillSet.category}</h5>
+      <div class="tags">
+        ${skillSet.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+      </div>
+    `;
+    
+    skillsContainer.appendChild(categoryDiv);
   });
 }
 
-
-/* === Back to Top Button === */
-// HTML: <button id="btn-back-to-top"><i class="bi bi-arrow-up"></i></button>
-let mybutton = document.getElementById("btn-back-to-top");
-
-window.onscroll = function () {
-  scrollFunction();
-};
-
-function scrollFunction() {
-  if (
-    document.body.scrollTop > 20 ||
-    document.documentElement.scrollTop > 20
-  ) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
+/* ========================================
+   PORTFOLIO DATA & RENDER
+   ======================================== */
+const projects = [
+  {
+    title: "ShieldHub - Protection In One Hub",
+    image: "assets/images/Project2.png",
+    tech: ["Node.js", "Express.js", "MongoDB", "Cybersecurity"],
+    desc: "A centralized cybersecurity hub providing threat monitoring, real-time alerts, and security management tools in one unified dashboard.",
+    link: "https://github.com/Subhanshusinha/ShieldHub-Protection-In-One-Hub"
+  },
+  {
+    title: "SecureBox - File Integrity Checker",
+    image: "assets/images/Project3.png",
+    tech: ["Node.js", "Crypto Module", "Cybersecurity"],
+    desc: "Verifies file integrity using cryptographic hashing. Detects unauthorized modifications and ensures data hasn't been tampered with.",
+    link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
+  },
+  {
+    title: "Image Steganography Tool",
+    image: "assets/images/Project4.png",
+    tech: ["JavaScript", "Node.js", "Crypto"],
+    desc: "Hides secret messages inside images using steganography techniques. Encrypts and decrypts hidden data without visible changes to the image.",
+    link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
+  },
+  {
+    title: "FocusFlow - Productivity Dashboard",
+    image: "assets/images/Project5.png",
+    tech: ["HTML & CSS", "JavaScript", "Bootstrap"],
+    desc: "An all-in-one productivity dashboard with tasks, timers, notes, and habit tracking to keep you focused and organized every day.",
+    link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
   }
+];
+
+const portfolioGrid = document.getElementById("portfolio-grid");
+
+if (portfolioGrid) {
+  projects.forEach(project => {
+    const col = document.createElement("div");
+    col.className = "col-md-4 mb-4 portfolio-item-gsap";
+
+    col.innerHTML = `
+      <div class="flip-card">
+        <div class="flip-card-inner">
+
+          <!-- FRONT: image + project name only -->
+          <div class="flip-card-front">
+            <div class="flip-img-wrap">
+              <img src="${project.image}" alt="${project.title}">
+              <div class="flip-img-overlay"></div>
+            </div>
+            <div class="flip-front-info">
+              <h3 class="flip-title">${project.title}</h3>
+              <p class="flip-hint"><i class="bi bi-arrow-repeat me-1"></i>Hover to flip</p>
+            </div>
+          </div>
+
+          <!-- BACK: description + skills + GitHub -->
+          <div class="flip-card-back">
+            <div class="flip-back-content">
+              <div class="flip-back-icon"><i class="bi bi-code-slash"></i></div>
+              <h3 class="flip-back-title">${project.title}</h3>
+              <p class="flip-back-desc">${project.desc}</p>
+              <div class="flip-back-tags">
+                ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join('')}
+              </div>
+              <a href="${project.link}" target="_blank" class="btn-primary-glow flip-btn">
+                <i class="bi bi-github me-2"></i> View on GitHub
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+    portfolioGrid.appendChild(col);
+  });
 }
 
-mybutton.addEventListener("click", function () {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
+/* ========================================
+   SPOTLIGHT / TORCH EFFECT ON PROJECT GRID
+   ======================================== */
+const spotlightGrid = document.getElementById("portfolio-grid");
+if (spotlightGrid) {
+  spotlightGrid.addEventListener("mousemove", (e) => {
+    const rect = spotlightGrid.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    spotlightGrid.style.setProperty("--sx", x + "px");
+    spotlightGrid.style.setProperty("--sy", y + "px");
+    spotlightGrid.classList.add("spotlight-active");
+  });
+  spotlightGrid.addEventListener("mouseleave", () => {
+    spotlightGrid.classList.remove("spotlight-active");
+  });
+}
+
+/* ========================================
+   GLOWING SKILL TAG COLORS ON HOVER
+   ======================================== */
+const glowColors = [
+  "#fca61f", "#6f34fe", "#00d4ff", "#ff4d6d", "#00e676", "#ff9800"
+];
+document.addEventListener("DOMContentLoaded", () => {
+  const tags = document.querySelectorAll('.tech-tag');
+  tags.forEach((tag, i) => {
+    const color = glowColors[i % glowColors.length];
+    tag.addEventListener('mouseenter', () => {
+      tag.style.boxShadow = `0 0 14px ${color}`;
+      tag.style.borderColor = color;
+      tag.style.color = color;
+    });
+    tag.addEventListener('mouseleave', () => {
+      tag.style.boxShadow = '';
+      tag.style.borderColor = '';
+      tag.style.color = '';
+    });
+  });
 });
 
-/* === Contact Section CAPTCHA === */
-// HTML: #captcha-question, #captcha, #captcha-error inside contact form
+/* ========================================
+   EXPERIENCE DATA & RENDER
+   ======================================== */
+const experiences = [
+  {
+    role: "Technical Writer & Content Specialist", // Assumed role based on description
+    company: "Testshine Co., Ltd.",
+    location: "Shanghai, China (Remote)",
+    duration: "Present", // Or a specific date if provided
+    description: [
+      "Developed and maintained technical documentation for laboratory testing instruments, including product brochures, specifications, and user-focused technical materials.",
+      "Conducted in-depth research and analysis of testing equipment, industry standards, and product specifications to produce accurate technical documentation.",
+      "Collaborated with engineering, design, and web development teams to prepare product documentation, MDX content, and website materials for digital publication.",
+      "Supported website development by creating structured technical content, optimizing documentation, and managing product information for online deployment."
+    ]
+  }
+  // To add more experience, just copy the block above, paste below, and change details!
+];
 
+const experienceGrid = document.getElementById("experience-grid");
+
+if (experienceGrid) {
+  experiences.forEach((exp, index) => {
+    const col = document.createElement("div");
+    col.className = "col-12 mb-4 timeline-item-gsap";
+    
+    col.innerHTML = `
+      <div class="glass-card experience-card">
+        <div class="exp-header d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+          <div>
+            <h3 class="exp-role text-white mb-1">${exp.role}</h3>
+            <h5 class="exp-company gradient-text mb-0">${exp.company} <span class="text-muted fs-6 ms-2"><i class="bi bi-geo-alt"></i> ${exp.location}</span></h5>
+          </div>
+          <div class="exp-duration mt-2 mt-md-0">
+            <span class="custom-badge"><i class="bi bi-calendar3 me-2"></i>${exp.duration}</span>
+          </div>
+        </div>
+        <ul class="exp-list text-muted">
+          ${exp.description.map(desc => `<li><i class="bi bi-check2-circle text-primary me-2"></i>${desc}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+    experienceGrid.appendChild(col);
+  });
+}
+
+/* ========================================
+   CERTIFICATIONS DATA & RENDER
+   ======================================== */
+const certifications = [
+  {
+    title: "AWS Certified Solutions Architect – Associate",
+    issuer: "Amazon Web Services",
+    icon: "bi bi-cloud-check",
+    link: "#" // Replace '#' with actual certificate link
+  },
+  {
+    title: "AWS Certified Developer – Associate",
+    issuer: "Amazon Web Services",
+    icon: "bi bi-code-slash",
+    link: "#" // Replace '#' with actual certificate link
+  },
+  {
+    title: "TryHackMe SOC Level 1",
+    issuer: "TryHackMe (Hands-on SOC Training)",
+    icon: "bi bi-shield-lock",
+    link: "" // Leave empty if no link
+  }
+  // To add more certifications, just copy the block above and change details!
+];
+
+const certGrid = document.getElementById("certifications-grid");
+
+if (certGrid) {
+  certifications.forEach((cert, index) => {
+    const col = document.createElement("div");
+    col.className = "col-md-6 col-lg-4 mb-4 cert-item-gsap";
+    
+    col.innerHTML = `
+      <div class="glass-card cert-card text-center d-flex flex-column h-100">
+        <div class="cert-icon mb-3 mx-auto">
+          <i class="${cert.icon}"></i>
+        </div>
+        <h4 class="cert-title mb-2 text-white">${cert.title}</h4>
+        <p class="cert-issuer text-muted small mb-4">${cert.issuer}</p>
+        ${cert.link ? `<a href="${cert.link}" target="_blank" class="btn-outline-glow magnetic-btn mt-auto mx-auto py-2 px-4" style="font-size: 0.85rem;">View Certificate</a>` : `<span class="mt-auto text-muted small">Completed</span>`}
+      </div>
+    `;
+    certGrid.appendChild(col);
+  });
+}
+
+/* ========================================
+   SCROLL ANIMATIONS (GSAP ScrollTrigger)
+   ======================================== */
+// Navbar blur effect on scroll
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector(".custom-nav");
+  if (window.scrollY > 50) {
+    nav.style.background = "rgba(10, 10, 15, 0.9)";
+    nav.style.boxShadow = "0 4px 30px rgba(0,0,0,0.5)";
+  } else {
+    nav.style.background = "rgba(10, 10, 15, 0.7)";
+    nav.style.boxShadow = "none";
+  }
+});
+
+// Section Titles Reveal
+gsap.utils.toArray('.section-header').forEach(header => {
+  gsap.from(header, {
+    scrollTrigger: {
+      trigger: header,
+      start: "top 80%",
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power3.out"
+  });
+});
+
+// Expertise Cards Stagger
+gsap.from(".expertise-card-wrap", {
+  scrollTrigger: {
+    trigger: "#expertise",
+    start: "top 70%",
+  },
+  y: 50,
+  opacity: 0,
+  stagger: 0.2,
+  duration: 0.8,
+  ease: "back.out(1.5)"
+});
+
+// Skills Section Reveal
+gsap.from(".skills-text", {
+  scrollTrigger: {
+    trigger: "#skills",
+    start: "top 75%",
+  },
+  x: -50,
+  opacity: 0,
+  duration: 0.8
+});
+
+gsap.from(".glass-panel", {
+  scrollTrigger: {
+    trigger: "#skills",
+    start: "top 75%",
+  },
+  x: 50,
+  opacity: 0,
+  duration: 0.8
+});
+
+// Portfolio Items Reveal
+gsap.from(".portfolio-item-gsap", {
+  scrollTrigger: {
+    trigger: "#projects",
+    start: "top 70%",
+  },
+  y: 50,
+  opacity: 0,
+  stagger: 0.2,
+  duration: 0.8
+});
+
+// Experience Items Reveal
+gsap.from(".timeline-item-gsap", {
+  scrollTrigger: {
+    trigger: "#experience",
+    start: "top 75%",
+  },
+  y: 30,
+  opacity: 0,
+  stagger: 0.2,
+  duration: 0.8
+});
+
+// Certification Items Reveal
+gsap.from(".cert-item-gsap", {
+  scrollTrigger: {
+    trigger: "#certifications",
+    start: "top 75%",
+  },
+  y: 30,
+  scale: 0.95,
+  opacity: 0,
+  stagger: 0.15,
+  duration: 0.7
+});
+
+/* ========================================
+   CAPTCHA & CONTACT FORM
+   ======================================== */
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("contactForm");
   const captchaQuestion = document.getElementById("captcha-question");
   const captchaInput = document.getElementById("captcha");
   const errorText = document.getElementById("captcha-error");
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
 
-  // Generate numbers
-  const num1 = Math.floor(Math.random() * 10) + 1;
-  const num2 = Math.floor(Math.random() * 10) + 1;
-  const correctAnswer = num1 + num2;
+  let num1 = Math.floor(Math.random() * 10) + 1;
+  let num2 = Math.floor(Math.random() * 10) + 1;
+  let correctAnswer = num1 + num2;
 
-  // Show question
-  captchaQuestion.textContent = `What is ${num1} + ${num2}?`;
+  function refreshCaptcha() {
+    num1 = Math.floor(Math.random() * 10) + 1;
+    num2 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer = num1 + num2;
+    if (captchaQuestion) {
+      captchaQuestion.textContent = `${num1} + ${num2} = ?`;
+    }
+    if (captchaInput) {
+      captchaInput.value = '';
+    }
+  }
 
-  // Validate on submit
-  form.addEventListener("submit", function (e) {
-    if (parseInt(captchaInput.value.trim()) !== correctAnswer) {
+  if (captchaQuestion) {
+    refreshCaptcha();
+  }
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
-      errorText.style.display = "block";
-    } else {
-      errorText.style.display = "none";
-    }
-  });
-});
 
+      if (parseInt(captchaInput.value.trim()) !== correctAnswer) {
+        errorText.classList.remove("d-none");
+        errorText.textContent = "Incorrect answer. Try again.";
+        errorText.classList.replace("text-success", "text-danger");
+        
+        // Shake animation for error
+        gsap.to(captchaInput, { x: 10, duration: 0.1, yoyo: true, repeat: 3 });
+        return;
+      }
 
-/* === Developer Quotes Box (Rotating) === */
-document.addEventListener("DOMContentLoaded", () => {
-  const quotes = [
-    "Security is not a feature, it’s a mindset.",
-    "Protect first. Build smart. Scale securely.",
-    "Cybersecurity starts where trust ends.",
-    "Every secure system begins with clean code.",
-    "Think like an attacker. Defend like an engineer.",
-    "Strong security is built, not assumed.",
-    "Secure code today prevents breaches tomorrow.",
-    "Behind every secure system is disciplined logic.",
-    "Building systems that are secure by design.",
-    "Code with purpose. Defend with precision."
-  ];
+      errorText.classList.add("d-none");
+      
+      // Update button state
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Sending... <i class="bi bi-hourglass-split ms-2"></i>';
+      submitBtn.disabled = true;
 
-  const quoteElement = document.getElementById("dev-quote");
+      // Prepare form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
 
-  if (quoteElement) {
-    let index = 0;
+      // Check if access key is still default
+      if (data.access_key === "YOUR_ACCESS_KEY_HERE") {
+        errorText.classList.remove("d-none");
+        errorText.classList.replace("text-success", "text-danger");
+        errorText.innerHTML = "<strong>Error:</strong> You need to add your Web3Forms Access Key in index.html!";
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        return;
+      }
 
-    // Initial Quote
-    quoteElement.textContent = `"${quotes[0]}"`;
-    // Add visible class after a short delay to trigger initial animation if needed, or immediately
-    requestAnimationFrame(() => quoteElement.classList.add('visible'));
+      // Submit via AJAX to Web3Forms
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+          // Trigger Delivery Animation
+          const overlay = document.getElementById("delivery-overlay");
+          overlay.classList.remove("d-none");
+          
+          const tl = gsap.timeline({ onComplete: () => {
+            setTimeout(() => {
+              gsap.to(overlay, { opacity: 0, duration: 0.5, onComplete: () => {
+                overlay.classList.add("d-none");
+                overlay.style.opacity = 1;
+                // Form reset
+                errorText.classList.remove("d-none");
+                errorText.classList.replace("text-danger", "text-success");
+                errorText.textContent = "Message sent successfully!";
+                form.reset();
+                refreshCaptcha();
+              }});
+            }, 2500); // Show success message for 2.5 seconds
+          }});
 
-    // Rotate with beautiful animation
-    setInterval(() => {
-      // Exit animation
-      quoteElement.classList.remove('visible');
-      quoteElement.classList.add('hidden');
+          // Initial positions
+          // Box starts high up in center
+          gsap.set(".delivery-box", { y: -150, opacity: 0, scale: 1, xPercent: -50, x: 0 });
+          // Boy starts off left, flipped to face RIGHT (scaleX: -1)
+          gsap.set(".delivery-boy", { x: -600, opacity: 1, scaleX: -1 });
+          gsap.set(".delivery-text-container", { opacity: 0, y: 20, scale: 0.8 });
 
-      setTimeout(() => {
-        index = (index + 1) % quotes.length;
-        quoteElement.textContent = `"${quotes[index]}"`;
+          // Animation sequence
+          tl.to(".delivery-box", { y: 20, opacity: 1, duration: 0.6, ease: "bounce.out" }) // box drops
+            .to(".delivery-boy", { x: 130, duration: 0.8, ease: "power2.inOut" }, "-=0.2") // boy rides in (facing right), stops with back under box
+            .to(".delivery-box", { y: 140, scale: 0.5, duration: 0.4, ease: "power1.in" }) // box drops onto the back of the bike
+            .to(".delivery-boy", { x: window.innerWidth, duration: 1.2, ease: "power2.in" }, "+=0.2") // boy rides away forward
+            .to(".delivery-box", { x: window.innerWidth - 130, duration: 1.2, ease: "power2.in" }, "<") // box rides away WITH the boy!
+            .to(".delivery-text-container", { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, "-=0.5"); // success text pops up
 
-        // precise timing to reset position without animation if needed, 
-        // but here we want smooth entry from bottom
-        quoteElement.classList.remove('hidden');
-        quoteElement.classList.add('visible');
-      }, 800); // Matches CSS transition duration
-    }, 4000); // More time to read
-  }
-});
-
-// ===========================================
-
-//  Portfolio Section Starts 
-/* === Scroll to Top on Page Reload === */
-window.onload = () => {
-  window.scrollTo(0, 0); // Scroll to top on reload
-};
-
-// === Project Data ===
-const projects = [
-  {
-    title: "Portfolio Website",
-    image: "images/Project1.png",
-    tech: ["HTML&CSS", "JavaScript", "Website"],
-    link: "https://github.com/Subhanshusinha/Portfolio-Subhanshu-Sinha"
-  },
-  {
-    title: "ShieldHub - Protection In One Hub",
-    image: "images/Project2.png",
-    tech: ["Node.js", "Express.js", "Ejs","MongoDB","Cyber security", "Digital Forensics"],
-    link: "https://github.com/Subhanshusinha/ShieldHub-Protection-In-One-Hub"
-  },
-  {
-    title: "SecureBox - File Integrity Checker Web App",
-    image: "images/Project3.png",
-    tech: ["Bootstrap", "Node.js", "Express.js", "Cyber security", "Crypto module (for SHA-256)"],
-    link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
-  },
-  {
-    title: "Image Steganography Tool",
-    image: "images/Project4.png",
-    tech: ["HTML&CSS", "JavaScript", "Node.js & Express.js", "Crypto"],
-    link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
-  },
-  {
-    title: "FocusFlow - All-in-One Productivity Dashboard",
-    image: "images/Project5.png",
-    tech: ["HTML&CSS", "JavaScript", "Bootstrap"],
-    link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
-  }
-];
-
-// === Layout Logic (CSS Grid) ===
-document.addEventListener("DOMContentLoaded", function () {
-  const container = document.getElementById("portfolio-container");
-
-  if (container) {
-    container.className = "projects-grid"; // Enable Grid
-
-    projects.forEach((project, index) => {
-      const card = document.createElement("article");
-      card.className = "project-card";
-      card.setAttribute("data-aos", "fade-up");
-      card.setAttribute("data-aos-delay", index * 100); // Stagger animations
-
-      card.innerHTML = `
-        <div class="project-img-wrapper">
-          <img src="${project.image}" alt="${project.title}" loading="lazy" />
-        </div>
-        <div class="project-info">
-          <div class="project-meta">
-            ${project.tech.map(t => `<span class="tech-pill">${t}</span>`).join("")}
-          </div>
-          <h3 class="project-title">${project.title}</h3>
-          <a href="${project.link}" target="_blank" class="btn-view-project">
-            View Project <i class="bi bi-arrow-right-short"></i>
-          </a>
-        </div>
-      `;
-
-      container.appendChild(card);
+        } else {
+          console.log(response);
+          errorText.classList.remove("d-none");
+          errorText.classList.replace("text-success", "text-danger");
+          errorText.textContent = json.message ? json.message : "Submission failed.";
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        errorText.classList.remove("d-none");
+        errorText.classList.replace("text-success", "text-danger");
+        errorText.textContent = "An error occurred. Please try again later.";
+      })
+      .finally(() => {
+        // Restore button state
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      });
     });
-
-    // Refresh AOS after adding elements
-    if (typeof AOS !== 'undefined') {
-      setTimeout(() => AOS.refresh(), 500); // Small delay to ensure rendering
-    }
-  } else {
-    console.error("Portfolio container not found!");
   }
 });
-
-
-
-
-
-
