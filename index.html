@@ -1,576 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal Portfolio - Subhanshu Sinha</title>
+  <title>Subhanshu Sinha | Portfolio</title>
 
-  <!-- bootstrap css cdn link -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
-  <link rel="icon" href="images/icons8-resume-100.png" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- custom css file -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- google font link -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <!-- Lenis CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
 
-  <!-- bootstrap icon cdn link -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- AOS Library css file cdn link -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-  <!-- jquery cdn link -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-
+  <!-- Meta SEO -->
+  <meta name="description" content="Subhanshu Sinha - Cybersecurity Enthusiast & Secure Backend Developer Portfolio">
+  
+  <link rel="icon" href="assets/images/icons8-resume-100.png" />
 </head>
 
-<body>
+<body class="dark-theme">
   <!-- Preloader -->
-  <div id="preloader">
-    <div class="preloader-content">
-      <div class="loader-logo">Subhanshu Sinha</div>
-      <div class="loader-spinner"></div>
-      <div class="loader-text">Loading Portfolio...</div>
+  <div class="preloader">
+    <div class="preloader-content text-center">
+      <!-- Animated CSS Boy -->
+      <div id="preloader-boy" style="display: inline-block; margin-bottom: 20px;">
+        <div class="css-boy">
+          <div class="boy-head"></div>
+          <div class="boy-body">
+            <div class="boy-arm left"></div>
+            <div class="boy-arm right"></div>
+          </div>
+          <div class="boy-legs">
+            <div class="boy-leg left"></div>
+            <div class="boy-leg right"></div>
+          </div>
+        </div>
+      </div>
+      <div id="preloader-text" class="fw-bold" style="font-size: 1.5rem; color: var(--primary-orange); font-family: var(--font-heading); letter-spacing: 1px;">
+        Please wait, I am loading...
+      </div>
+      <div class="preloader-track">
+        <div class="preloader-fill" id="preloader-fill"></div>
+      </div>
     </div>
   </div>
 
   <!-- Scroll Progress Bar -->
   <div id="scroll-progress"></div>
 
-  <!-- Custom Cursor -->
-  <div class="custom-cursor"></div>
-  <div class="cursor-trail"></div>
-  <!-- navbar starts -->
-  <nav id="navbar-top" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-    <div class="container-fluid px-5">
-      <!-- Brand Logo -->
-      <a class="navbar-brand fw-bold fs-2" href="#" style="color: #3f396d">
-        Portfolio
-      </a>
-
-      <!-- Mobile Menu Toggle Button -->
-      <button class="nav-menu d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="bi bi-list fs-3" style="color: #fca61f;"></i>
-      </button>
-
-      <!-- Nav Links -->
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+    <div class="container">
+      <a class="navbar-brand" href="#home">S.Sinha<span class="accent">_</span></a>
+      <div class="d-flex align-items-center gap-3 ms-auto">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Light/Dark Mode">
+          <i class="bi bi-sun-fill" id="theme-icon"></i>
+        </button>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <i class="bi bi-grid-3x3-gap"></i>
+        </button>
+      </div>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto gap-4 fs-6">
-          <li class="nav-item">
-            <a class="nav-link" href="#home"><i class="bi bi-house-door me-1"></i> Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#about"><i class="bi bi-gear me-1"></i> Skills</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#portfolio"><i class="bi bi-briefcase me-1"></i> Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact"><i class="bi bi-envelope me-1"></i> Contact</a>
-          </li>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#expertise">Expertise</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#certifications">Certifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Background Music Audio -->
-  <!-- <audio id="bg-music" src="music/music.mp3" autoplay loop></audio> -->
-
-  <!-- Mute/Unmute Toggle Button -->
-  <!-- <button id="music-toggle">🔊 Mute</button> -->
-
-  <!-- navbar ends -->
-
-  <!-- home section starts -->
-  <section class="home pt-5 pb-5" id="home">
-    <!-- Cyber Matrix Background -->
-    <canvas id="cyber-canvas"></canvas>
-
+  
+  <!-- Home Section -->
+  <section id="home" class="hero-section d-flex align-items-center">
     <div class="container">
-      <div class="row justify-content-evenly align-items-center">
-        <!-- Text Column -->
-        <div class="col-10 col-md-6 text-center text-md-start" data-aos="slide-right">
-          <h2>
-            Hello! I Am <br />
-            <span class="c-orange">Subhanshu Sinha</span>
-          </h2>
-
-          <!-- Optional Typing Effect -->
-          <h4 class="typing-text mt-2">
-            <span id="typing-animation"></span><span class="cursor">|</span>
-          </h4>
-
-          <p class="text-muted text-justify">
-            Focused on Cybersecurity and SOC operations, with hands-on exposure to SIEM, Kali Linux, Wireshark, and
-            Digital Forensics.
-            Also experienced in secure backend development using Node.js, Express.js, EJS, and MongoDB, building
-            practical and security-driven solutions.
-            <br><br>
-            I enjoy building real-world, security-focused projects and continuously
-            improving my skills in network security, threat analysis, and secure
-            application development, with the goal of contributing to teams that
-            protect digital systems.
+      <div class="row align-items-center">
+        <div class="col-lg-7 hero-content">
+          <div class="badge-wrapper mb-3">
+            <span class="custom-badge"><i class="bi bi-shield-lock me-2"></i>Cybersecurity & Backend</span>
+          </div>
+          <h1 class="hero-title">
+            Hi, I'm <br> <span class="gradient-text">Subhanshu Sinha</span>
+          </h1>
+          <h3 class="hero-subtitle type-wrap">
+            <span id="typewriter"></span><span class="cursor-blink">|</span>
+          </h3>
+          <p class="hero-desc mt-4">
+            Focused on Cybersecurity and SOC operations, with hands-on exposure to SIEM, Kali Linux, Wireshark, and Digital Forensics. Experienced in secure backend development building practical and security-driven solutions.
           </p>
-
-          <!-- Button Group -->
-          <div class="button-group mt-4">
-            <a href="https://github.com/Subhanshusinha" target="_blank" class="c-btn h-btn">
-              My Work
-            </a>
-
-            <a href="#portfolio" class="read-my-work-btn">Read My Work</a>
+          <div class="hero-btns mt-5">
+            <a href="#projects" class="btn-primary-glow magnetic-btn">View My Work <i class="bi bi-arrow-down-right"></i></a>
+            <a href="https://github.com/Subhanshusinha" target="_blank" class="btn-outline-glow magnetic-btn ms-3"><i class="bi bi-github me-2"></i>GitHub</a>
+            <a href="assets/images/Subhanshu_Sinha_Resume.pdf" download class="btn-outline-glow magnetic-btn ms-3 mt-3 mt-md-0"><i class="bi bi-download me-2"></i>Resume</a>
           </div>
         </div>
-
-        <!-- Image Column -->
-        <div class="col-10 col-md-4 d-none d-md-block" data-aos="slide-left">
-          <!-- Quote Section (Moved) -->
-          <div class="quote-box text-center mb-4" id="quote-box">
-            <h5 id="dev-quote" class="quote-text"></h5>
-          </div>
-          <img src="images/profile_pic.png" class="img-fluid profile-pic" alt="Profile of Subhanshu Sinha" />
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- home section ends here -->
-
-  <!-- Expertise Section Starts -->
-  <section class="expertise section-padding" id="service">
-    <div class="heading text-center mb-5">
-      <small class="section-subtitle">🔧 Tools I Work With</small>
-      <h3 class="section-title">My Expertise</h3>
-    </div>
-
-    <div class="row justify-content-center gx-4 gy-4">
-      <!-- Cyber Security -->
-      <div class="col-md-4 col-10" data-aos="fade-up">
-        <div class="service-card text-center h-100">
-          <img src="images/service-icon1.png" alt="Cyber Security Icon" class="service-icon mb-3" />
-          <h4>CyberSecurity</h4>
-          <p class="text-muted">
-            🛡️ Hands-on experience in threat detection, security monitoring,
-            and system analysis using tools like SIEM, Kali Linux,
-            Wireshark, and Digital Forensics to identify and mitigate
-            real-world security risks.
-          </p>
-        </div>
-      </div>
-
-      <!-- Full Stack Development -->
-      <div class="col-md-4 col-10" data-aos="fade-up">
-        <div class="service-card text-center h-100">
-          <img src="images/service-icon2.png" alt="Full Stack Icon" class="service-icon mb-3" />
-          <h4>Secure Backend Development</h4>
-          <p class="text-muted">
-            🌐 Building secure and scalable backend applications using
-            Node.js, Express.js, EJS, and MongoDB, with a strong focus
-            on secure coding practices and API security.
-          </p>
-        </div>
-      </div>
-
-      <!-- Debugging -->
-      <div class="col-md-4 col-10" data-aos="fade-up">
-        <div class="service-card text-center h-100">
-          <img src="images/service-icon3.png" alt="Debugging Icon" class="service-icon mb-3" />
-          <h4>Debugging & Problem Solving</h4>
-          <p class="text-muted">
-            🔍 Strong analytical skills to identify, debug, and resolve
-            application and security issues efficiently, ensuring
-            stable, clean, and reliable systems.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Expertise Section Ends -->
-
-  <!-- skill section starts -->
-  <section class="skill py-5" id="about">
-    <div class="container">
-      <!-- Section Heading -->
-      <div class="heading text-center mb-5">
-        <h1>My Skills</h1>
-        <h3>Crafting Secure and Scalable Digital Solutions</h3>
-      </div>
-
-      <!-- Skill Content -->
-      <div class="row justify-content-center align-items-start">
-
-        <!-- Skill List Box -->
-        <div class="col-10 col-md-6 mb-4 mb-md-0" data-aos="slide-right">
-          <div class="skills-box">
-            <div class="skills-list">
-              <h4>Programming</h4>
-              <div class="skill-tags">
-                <span class="skill-badge">Python Scripting</span>
-                <span class="skill-badge">JavaScript</span>
-              </div>
-
-              <h4>Cybersecurity</h4>
-              <div class="skill-tags">
-                <span class="skill-badge">SOC</span>
-                <span class="skill-badge">SIEM</span>
-                <span class="skill-badge">Digital Forensics</span>
-                <span class="skill-badge">Kali Linux</span>
-                <span class="skill-badge">Wireshark</span>
-              </div>
-
-              <h4>Backend Development</h4>
-              <div class="skill-tags">
-                <span class="skill-badge">Node.js</span>
-                <span class="skill-badge">Express.js</span>
-                <span class="skill-badge">EJS</span>
-                <span class="skill-badge">MongoDB</span>
-              </div>
-
-              <h4>CS Fundamentals</h4>
-              <div class="skill-tags">
-                <span class="skill-badge">Computer Networking</span>
-                <span class="skill-badge">SQL</span>
-              </div>
-
-              <h4>Soft Skills</h4>
-              <div class="skill-tags">
-                <span class="skill-badge">Effective Communication</span>
-                <span class="skill-badge">Problem-Solving</span>
-                <span class="skill-badge">Leadership</span>
-                <span class="skill-badge">Attention to Detail</span>
-              </div>
-            </div>
+        <div class="col-lg-5 hero-image-col d-none d-lg-block">
+          <div class="image-container">
+            <div class="glow-orb"></div>
+            <img src="assets/images/profile_pic.png" alt="Subhanshu Sinha" class="hero-img">
+            <div class="floating-badge badge-1"><i class="bi bi-shield-check"></i> SOC</div>
+            <div class="floating-badge badge-2"><i class="fa-brands fa-node-js"></i> Backend</div>
           </div>
         </div>
-
-        <!-- Skill Description and CV Button -->
-        <div class="col-10 col-md-6" data-aos="slide-left">
-          <div class="heading mt-5 mt-md-3">
-            <p class="text-muted text-justify mt-3">
-              I focus on cybersecurity with a strong interest in SOC operations,
-              threat detection, and secure system design. I have hands-on experience
-              with security tools and concepts such as SIEM, Digital Forensics,
-              Kali Linux, and Wireshark to analyze security events, investigate incidents,
-              and understand real-world attack techniques.
-              <br><br>
-              Alongside cybersecurity, I build secure and scalable backend applications
-              using Node.js, Express.js, EJS, and MongoDB, following secure coding practices
-              to reduce vulnerabilities. My approach combines security awareness,
-              clean development practices, and problemsolving to deliver reliable
-              and security-driven digital solutions.
-            </p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
-  <!-- skill section end here -->
 
-  <!-- Portfolio Section Starts  ==  Using JavaScript-->
-  <section class="portfolio" id="portfolio">
-    <div class="container">
-      <div class="heading text-center">
-        <h3>Check My Portfolio</h3>
-      </div>
-      <div id="portfolio-container"></div>
-    </div>
-  </section>
-  </section>
-
-  <!-- Using HTML manually create project -->
-  <!-- <section class="portfolio" id="portfolio">
-  <div class="heading text-center pt-5">
-    <small>Creative Work</small>
-    <h3>Check My Portfolio</h3>
+  <!-- Wave Divider -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(111,52,254,0.08)"/></svg>
   </div>
 
-  <div class="portfolio-body container"> -->
-
-  <!-- Row 1: 2 Projects -->
-  <!-- <div class="row justify-content-center"> -->
-  <!-- Project 1 -->
-  <!-- <div class="post col-md-6 col-10 mt-4" data-aos="fade-up">
-        <div class="card">
-          <img src="images/portfolio.jpg" class="card-img-top" alt="Portfolio Website" />
-          <div class="card-body text-center">
-            <h4 class="card-title">Portfolio Website</h4>
-            <span class="badge">HTML&CSS</span>
-            <span class="badge">JavaScript</span>
-            <span class="badge mb-2">Website</span><br />
-            <a href="https://github.com/Subhanshusinha/Image-Steganography-Tool" target="_blank" class="read-more-btn link">Read More</a>
+  <!-- Expertise Section -->
+  <section id="expertise" class="expertise-section section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="sub-title">// WHAT I DO</span>
+        <h2 class="title">My <span class="gradient-text">Expertise</span></h2>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-md-4 expertise-card-wrap">
+          <div class="glass-card expertise-card">
+            <div class="icon-wrapper mb-4">
+              <i class="bi bi-shield-shaded"></i>
+            </div>
+            <h4>CyberSecurity</h4>
+            <p>Hands-on experience in threat detection, security monitoring, and system analysis using tools like SIEM, Kali Linux, Wireshark, and Digital Forensics to mitigate risks.</p>
           </div>
         </div>
-      </div> -->
-  <!-- Portfolio Section Ends -->
-
-  <!-- testimonial ends here -->
-
-  <!-- blog section starts -->
-
-  <!-- blog section ends here -->
-
-  <!-- Contact Section Starts -->
-  <section class="contact section-padding" id="contact">
-    <!-- Quote Section -->
-    <!-- (Moved to home) -->
-
-    <!-- Bubble Animation (Shared Style) -->
-    <div class="bubbles">
-      <span style="--i:11;"></span>
-      <span style="--i:12;"></span>
-      <span style="--i:24;"></span>
-      <span style="--i:10;"></span>
-      <span style="--i:14;"></span>
-      <span style="--i:23;"></span>
-      <span style="--i:18;"></span>
-      <span style="--i:16;"></span>
-      <span style="--i:19;"></span>
-      <span style="--i:20;"></span>
-      <span style="--i:22;"></span>
-      <span style="--i:25;"></span>
-      <span style="--i:18;"></span>
-      <span style="--i:21;"></span>
-      <span style="--i:15;"></span>
-    </div>
-
-    <div class="container position-relative z-2">
-      <div class="heading text-center mb-5">
-        <small class="section-subtitle">Get in Touch</small>
-        <h3 class="section-title text-white">Any Questions?</h3>
-      </div>
-
-      <div class="row justify-content-center align-items-start">
-        <!-- Left: Contact Details (Glass Card) -->
-        <div class="col-md-5 col-10 mb-5 mb-md-0" data-aos="fade-right">
-          <div class="contact-card glass-card h-100">
-            <h4 class="mb-4 text-white">Contact Info</h4>
-
-            <div class="contact-item mb-4">
-              <div class="icon-box">
-                <i class="bi bi-person-fill"></i>
-              </div>
-              <div class="text-box">
-                <small>Name</small>
-                <p>Subhanshu Sinha</p>
-              </div>
+        
+        <div class="col-md-4 expertise-card-wrap">
+          <div class="glass-card expertise-card">
+            <div class="icon-wrapper mb-4">
+              <i class="bi bi-server"></i>
             </div>
-
-            <div class="contact-item mb-4">
-              <div class="icon-box">
-                <i class="bi bi-telephone-fill"></i>
-              </div>
-              <div class="text-box">
-                <small>Phone Number</small>
-                <p>9608895008</p>
-              </div>
-            </div>
-
-            <div class="contact-item">
-              <div class="icon-box">
-                <i class="bi bi-envelope-fill"></i>
-              </div>
-              <div class="text-box">
-                <small>Email</small>
-                <p>subhanshu.sinha889@gmail.com</p>
-              </div>
-            </div>
+            <h4>Secure Backend</h4>
+            <p>Building secure and scalable backend applications using Node.js, Express.js, EJS, and MongoDB, with a strong focus on secure coding practices and API security.</p>
           </div>
         </div>
-
-        <!-- Right: Contact Form (Glass Card) -->
-   
-<div class="col-md-6 col-10" data-aos="fade-left">
-  <div class="contact-box glass-card">
-    <h4 class="mb-4 text-white">Send a Message</h4>
-
-    <form action="https://formsubmit.co/subhanshu.sinha889@gmail.com"
-          method="POST"
-          class="contact-form"
-          id="contactForm">
-
-      <!-- FormSubmit Settings -->
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_subject" value="New Contact Message from Portfolio">
-      <input type="hidden" name="_template" value="table">
-      <!-- OPTIONAL: redirect after submit -->
-      <!-- <input type="hidden" name="_next" value="thankyou.html"> -->
-
-      <!-- Name -->
-      <div class="mb-3">
-        <input type="text"
-               class="form-control glass-input"
-               name="name"
-               placeholder="Your Name"
-               required>
-      </div>
-
-      <!-- Email -->
-      <div class="mb-3">
-        <input type="email"
-               class="form-control glass-input"
-               name="email"
-               placeholder="Your Email"
-               required>
-      </div>
-
-      <!-- Phone -->
-      <div class="mb-3">
-        <input type="text"
-               class="form-control glass-input"
-               name="phone"
-               placeholder="Phone No. (Optional)">
-      </div>
-
-      <!-- Message -->
-      <div class="mb-3">
-        <textarea class="form-control glass-input"
-                  name="message"
-                  placeholder="Write your message..."
-                  rows="4"
-                  required></textarea>
-      </div>
-
-      <!-- CAPTCHA -->
-      <div class="mb-3">
-        <label id="captcha-question" class="text-white small mb-2">Loading...</label>
-        <input type="text"
-               id="captcha"
-               name="captcha"
-               class="form-control glass-input"
-               placeholder="Enter Answer"
-               required>
-        <small id="captcha-error" style="color:#ff6b6b; display:none;">
-          Wrong answer!
-        </small>
-      </div>
-
-      <!-- Submit -->
-      <button class="c-btn w-100 py-3 rounded-pill mt-2" type="submit">
-        Send Message <i class="bi bi-send ms-2"></i>
-      </button>
-    </form>
-  </div>
-</div>
-
+        
+        <div class="col-md-4 expertise-card-wrap">
+          <div class="glass-card expertise-card">
+            <div class="icon-wrapper mb-4">
+              <i class="bi bi-bug"></i>
+            </div>
+            <h4>Debugging & Problem Solving</h4>
+            <p>Strong analytical skills to identify, debug, and resolve application and security issues efficiently, ensuring stable, clean, and reliable systems.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Back to Top Button -->
-  <button type="button" class="btn btn-floating btn-lg rounded-pill" id="btn-back-to-top">
-    <i class="bi bi-arrow-up"></i>
-  </button>
+  <!-- Wave Divider -->
+  <div class="wave-divider wave-flip">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="rgba(252,166,31,0.06)"/></svg>
+  </div>
 
-
-
-  <!-- Footer Section Starts -->
-  <!-- Footer Section Starts -->
-  <footer class="footer">
-    <!-- Bubble Animation Background -->
-    <div class="bubbles">
-      <span style="--i:11;"></span>
-      <span style="--i:12;"></span>
-      <span style="--i:24;"></span>
-      <span style="--i:10;"></span>
-      <span style="--i:14;"></span>
-      <span style="--i:23;"></span>
-      <span style="--i:18;"></span>
-      <span style="--i:16;"></span>
-      <span style="--i:19;"></span>
-      <span style="--i:20;"></span>
-      <span style="--i:22;"></span>
-      <span style="--i:25;"></span>
-      <span style="--i:18;"></span>
-      <span style="--i:21;"></span>
-      <span style="--i:15;"></span>
-      <span style="--i:13;"></span>
-      <span style="--i:26;"></span>
-      <span style="--i:17;"></span>
-      <span style="--i:13;"></span>
-      <span style="--i:28;"></span>
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section section-padding">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 skills-text">
+          <span class="sub-title">// TOOLKIT</span>
+          <h2 class="title mb-4">Crafting Secure & Scalable Solutions</h2>
+          <p class="mb-4">
+            I focus on cybersecurity with a strong interest in SOC operations, threat detection, and secure system design. I have hands-on experience with security tools and concepts to analyze events and understand real-world attack techniques.
+          </p>
+          <p>
+            Alongside cybersecurity, I build scalable backend applications using modern web technologies following secure coding practices to reduce vulnerabilities.
+          </p>
+        </div>
+        <div class="col-lg-6 skills-tags">
+          <div id="skills-container" class="glass-panel">
+            <!-- Skills populated by script.js -->
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Content Wrapper for Glassmorphism -->
-    <div class="footer-content glass-pane">
-      <h3 class="footer-title" data-aos="fade-up">Subhanshu Sinha - Portfolio</h3>
-
-      <!-- Navigation Links -->
-      <div class="footer-links" data-aos="fade-up">
-        <a href="#home">Home</a>
-        <div class="vr"></div>
-        <a href="#about">About</a>
-        <div class="vr"></div>
-        <a href="#portfolio">Portfolio</a>
-        <div class="vr"></div>
-        <a href="#contact">Contact</a>
+  <!-- Experience Section -->
+  <section id="experience" class="experience-section section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="sub-title">// CAREER PATH</span>
+        <h2 class="title">My <span class="gradient-text">Experience</span></h2>
       </div>
-
-      <!-- Social Icons -->
-      <div class="social-links" data-aos="fade-up">
-        <!-- GitHub -->
-        <a href="https://github.com/Subhanshusinha" class="social-icon" target="_blank">
-          <i class="bi bi-github"></i>
-        </a>
-
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/subhanshu-sinha-43029224a/" class="social-icon" target="_blank">
-          <i class="bi bi-linkedin"></i>
-        </a>
-
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/subhanshusinha2?igsh=MXFxd3pvcjU3ZzRpYQ==&utm_source=ig_contact_invite"
-          class="social-icon" target="_blank">
-          <i class="bi bi-instagram"></i>
-        </a>
+      
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div id="experience-grid" class="row">
+            <!-- Experiences populated by script.js -->
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Copyright -->
-      <hr class="footer-line" />
-      <p class="footer-copy">© 2025 Subhanshu Sinha • All Rights Reserved</p>
+  <!-- Certifications Section -->
+  <section id="certifications" class="certifications-section section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="sub-title">// ACHIEVEMENTS</span>
+        <h2 class="title">My <span class="gradient-text">Certifications</span></h2>
+      </div>
+      
+      <div id="certifications-grid" class="row justify-content-center g-4">
+        <!-- Certifications populated by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <span class="sub-title">// PORTFOLIO</span>
+        <h2 class="title">Featured <span class="gradient-text">Projects</span></h2>
+      </div>
+      
+      <div id="portfolio-grid" class="row g-4">
+        <!-- Projects populated by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section section-padding">
+    <div class="container">
+      <div class="glass-container p-4 p-md-5">
+        <div class="row">
+          <div class="col-lg-5 contact-info pe-lg-5">
+            <span class="sub-title">// GET IN TOUCH</span>
+            <h2 class="title mb-4">Let's Work Together</h2>
+            <p class="mb-5">Have a project in mind, a security question, or just want to say hi? Feel free to reach out.</p>
+            
+            <div class="contact-item d-flex align-items-center mb-4">
+              <div class="icon-circle"><i class="bi bi-envelope"></i></div>
+              <div class="ms-3">
+                <h6>Email</h6>
+                <a href="mailto:subhanshu.sinha667@gmail.com" class="text-reset text-decoration-none">subhanshu.sinha667@gmail.com</a>
+              </div>
+            </div>
+            
+            <div class="contact-item d-flex align-items-center mb-4">
+              <div class="icon-circle"><i class="bi bi-telephone"></i></div>
+              <div class="ms-3">
+                <h6>Phone</h6>
+                <span>9608895008</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-7 mt-5 mt-lg-0 contact-form-col">
+            <form id="contactForm" class="custom-form">
+              <!-- Web3Forms Access Key (User must replace this) -->
+              <input type="hidden" name="access_key" value="dec59941-aae2-455c-a8c9-616c450d6c16">
+              <input type="hidden" name="subject" value="New Contact Message from Portfolio">
+              <input type="checkbox" name="botcheck" style="display: none;">
+              
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="input-group-custom">
+                    <input type="text" name="name" id="name" required placeholder=" ">
+                    <label for="name">Your Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group-custom">
+                    <input type="email" name="email" id="email" required placeholder=" ">
+                    <label for="email">Your Email</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group-custom">
+                    <input type="text" name="subject" id="subject" placeholder=" ">
+                    <label for="subject">Subject</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-group-custom">
+                    <textarea name="message" id="message" rows="4" required placeholder=" "></textarea>
+                    <label for="message">Message</label>
+                  </div>
+                </div>
+                <div class="col-12 mt-4">
+                  <div class="captcha-box mb-3 d-flex align-items-center justify-content-between p-3 rounded">
+                    <span id="captcha-question" class="fw-bold">Loading...</span>
+                    <input type="text" id="captcha" class="form-control w-25" required placeholder="Answer">
+                  </div>
+                  <small id="captcha-error" class="text-danger d-none">Incorrect answer. Try again.</small>
+                  
+                  <button type="submit" class="btn-primary-glow w-100 magnetic-btn mt-3">
+                    Send Message <i class="bi bi-send ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer py-5 text-center">
+    <div class="container">
+      <h3 class="footer-brand">Subhanshu Sinha</h3>
+      <div class="social-links my-4">
+        <a href="https://github.com/Subhanshusinha" target="_blank" class="magnetic-btn"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/subhanshu-sinha-43029224a/" target="_blank" class="magnetic-btn"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.instagram.com/subhanshusinha2" target="_blank" class="magnetic-btn"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div class="footer-bottom text-center">
+        <p class="mb-0 text-muted">&copy; 2026 Subhanshu Sinha. All Rights Reserved.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- Footer Section Ends -->
+  <!-- Back to Top Button -->
+  <button id="back-to-top" title="Back to Top">
+    <i class="bi bi-arrow-up"></i>
+  </button>
 
-  <!-- Bootstrap JavaScript CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
+  <!-- Delivery Animation Overlay -->
+  <div id="delivery-overlay" class="delivery-overlay d-none">
+    <div class="delivery-container">
+      <div class="delivery-box">📦</div>
+      <div class="delivery-boy">🚴‍♂️</div>
+      <div class="delivery-text-container">
+        <i class="bi bi-check-circle-fill text-success delivery-check d-block mb-2"></i>
+        <h2 class="delivery-text gradient-text">Message Delivered!</h2>
+      </div>
+    </div>
+  </div>
 
-  <!-- Particles.js CDN -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-  <!-- Portfolio Section Starts -->
-  <!-- === AOS (Animate On Scroll) Library Script === -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-  <script>
-    // === Initialize AOS Library ===
-    AOS.init({
-      duration: 800, // Animation duration in milliseconds (0.8 seconds)
-      once: false     // Whether animation should happen only once while scrolling down
-    });
-  </script>
-
-
-  <!-- Custom JS File -->
-  <script src="script.js"></script>
+  <!-- Scripts -->
+  <!-- Lenis -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  <!-- GSAP Core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- GSAP ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
 </body>
-
 </html>
-
-
-
