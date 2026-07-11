@@ -241,28 +241,28 @@ if (skillsContainer) {
 const projects = [
   {
     title: "ShieldHub - Protection In One Hub",
-    image: "assets/images/Project2.png",
+    image: "images/Project2.png",
     tech: ["Node.js", "Express.js", "MongoDB", "Cybersecurity"],
     desc: "A centralized cybersecurity hub providing threat monitoring, real-time alerts, and security management tools in one unified dashboard.",
     link: "https://github.com/Subhanshusinha/ShieldHub-Protection-In-One-Hub"
   },
   {
     title: "SecureBox - File Integrity Checker",
-    image: "assets/images/Project3.png",
+    image: "images/Project3.png",
     tech: ["Node.js", "Crypto Module", "Cybersecurity"],
     desc: "Verifies file integrity using cryptographic hashing. Detects unauthorized modifications and ensures data hasn't been tampered with.",
     link: "https://github.com/Subhanshusinha/Secure-Box-File-Integrity-Checker.git"
   },
   {
     title: "Image Steganography Tool",
-    image: "assets/images/Project4.png",
+    image: "images/Project4.png",
     tech: ["JavaScript", "Node.js", "Crypto"],
     desc: "Hides secret messages inside images using steganography techniques. Encrypts and decrypts hidden data without visible changes to the image.",
     link: "https://github.com/Subhanshusinha/Image-Steganography-Tool"
   },
   {
     title: "FocusFlow - Productivity Dashboard",
-    image: "assets/images/Project5.png",
+    image: "images/Project5.png",
     tech: ["HTML & CSS", "JavaScript", "Bootstrap"],
     desc: "An all-in-one productivity dashboard with tasks, timers, notes, and habit tracking to keep you focused and organized every day.",
     link: "https://github.com/Subhanshusinha/FocusFlow-All-in-One-Productivity-Dashboard"
