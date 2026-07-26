@@ -1,29 +1,37 @@
 /* ========================================
    INITIALIZATION & SMOOTH SCROLL (LENIS)
    ======================================== */
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smooth: true,
-});
-
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
+let lenis = null;
+if (typeof Lenis !== 'undefined') {
+  try {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+    function raf(time) {
+      if (lenis) lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  } catch (e) {
+    console.warn("Lenis smooth scroll warning:", e);
+  }
 }
-requestAnimationFrame(raf);
 
 // Integrate GSAP with Lenis
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
-// Update ScrollTrigger on Lenis scroll
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
-gsap.ticker.lagSmoothing(0);
-
+  if (lenis) {
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
+}
 
 /* ========================================
    SCROLL PROGRESS BAR
@@ -51,7 +59,11 @@ window.addEventListener('scroll', () => {
 });
 if (backToTop) {
   backToTop.addEventListener('click', () => {
-    lenis.scrollTo(0, { duration: 1.5 });
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.5 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 }
 
@@ -98,10 +110,8 @@ if (statNumbers.length) {
   statNumbers.forEach(el => countObserver.observe(el));
 }
 
-
 // Magnetic Button Effect
 const magneticBtns = document.querySelectorAll('.magnetic-btn');
-
 magneticBtns.forEach(btn => {
   btn.addEventListener('mousemove', (e) => {
     const rect = btn.getBoundingClientRect();
@@ -110,60 +120,144 @@ magneticBtns.forEach(btn => {
     const x = e.clientX - rect.left - h;
     const y = e.clientY - rect.top - v;
     
-    gsap.to(btn, {
-      x: x * 0.4,
-      y: y * 0.4,
-      duration: 0.3,
-      ease: "power2.out"
-    });
+    if (typeof gsap !== 'undefined') {
+      gsap.to(btn, {
+        x: x * 0.4,
+        y: y * 0.4,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
   });
 
   btn.addEventListener('mouseleave', () => {
-    gsap.to(btn, { x: 0, y: 0, duration: 0.3, ease: "power2.out" });
+    if (typeof gsap !== 'undefined') {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.3, ease: "power2.out" });
+    }
   });
 });
-
 
 /* ========================================
    PRELOADER & INITIAL ANIMATION
    ======================================== */
-window.addEventListener('load', () => {
-  // Hide navbar initially
-  gsap.set('.navbar', { y: -100, opacity: 0 });
+function startPreloaderSequence() {
+  if (window.preloaderInitialized) return;
+  window.preloaderInitialized = true;
 
-  const tl = gsap.timeline();
-  const preloaderText = document.getElementById("preloader-text");
-  const preloaderBoy = document.getElementById("preloader-boy");
+  if (typeof gsap !== 'undefined') {
+    gsap.set('.navbar', { y: -100, opacity: 0 });
 
-  tl.to('#preloader-fill', { width: '100%', duration: 1.2, ease: "power2.inOut", onComplete: () => {
-        if (preloaderText && preloaderBoy) {
-          preloaderText.innerHTML = "Welcome to Subhanshu's Portfolio!";
-          preloaderText.style.color = "#fca61f";
+    const welcomeMsg = document.getElementById('preloader-welcome');
+    const nmapContainer = document.getElementById('nmap-scan-container');
+    const nmapOutput = document.getElementById('nmap-output');
 
-          // Raise right arm for wave
-          const rightArm = preloaderBoy.querySelector('.boy-arm.right');
-          if (rightArm) {
-            rightArm.style.animation = 'none';
-            gsap.to(rightArm, { rotation: -130, duration: 0.4, ease: "back.out(2)" });
+    if (nmapContainer && nmapOutput && welcomeMsg) {
+      nmapContainer.style.display = 'flex';
+      welcomeMsg.style.display = 'none';
+
+      const nmapLines = [
+        "Starting Nmap 7.93 ( https://nmap.org ) at " + new Date().toISOString().split('T')[0] + " 10:00 UTC",
+        "NSE: Loaded 155 scripts for scanning.",
+        "Initiating Ping Scan...",
+        "Scanning target (192.168.1.100) [4 ports]",
+        "Completed Ping Scan at 10:00, 0.05s elapsed (1 total hosts)",
+        "Initiating SYN Stealth Scan...",
+        "Discovered open port 22/tcp on 192.168.1.100",
+        "Discovered open port 80/tcp on 192.168.1.100",
+        "Discovered open port 443/tcp on 192.168.1.100",
+        "Completed SYN Stealth Scan at 10:00, 1.20s elapsed (1000 total ports)",
+        "Initiating Service scan...",
+        "Scanning 3 services on target",
+        "Completed Service scan at 10:01, 6.00s elapsed (3 services on 1 host)",
+        "Nmap scan report for target (192.168.1.100)",
+        "Host is up (0.015s latency).",
+        "Not shown: 997 closed tcp ports (reset)",
+        "PORT    STATE SERVICE  VERSION",
+        "22/tcp  open  ssh      OpenSSH 8.9p1",
+        "80/tcp  open  http     nginx 1.18.0",
+        "443/tcp open  ssl/http nginx 1.18.0",
+        "Target breached. Establishing secure connection...",
+        "ACCESS GRANTED."
+      ];
+
+      let lineIndex = 0;
+      function typeLine() {
+        if (lineIndex < nmapLines.length) {
+          const p = document.createElement('p');
+          p.textContent = nmapLines[lineIndex];
+          if (nmapLines[lineIndex].includes("Discovered open port")) {
+            p.classList.add("c-green");
+          } else if (nmapLines[lineIndex].includes("ACCESS GRANTED")) {
+            p.classList.add("c-cyan");
+            p.style.fontWeight = "bold";
+          } else if (nmapLines[lineIndex].includes("Target breached")) {
+            p.classList.add("c-purple");
           }
+          nmapOutput.appendChild(p);
+          nmapOutput.scrollTop = nmapOutput.scrollHeight;
+          lineIndex++;
+          setTimeout(typeLine, Math.random() * 80 + 30);
+        } else {
+          setTimeout(() => {
+            gsap.to(nmapContainer, { opacity: 0, duration: 0.5, onComplete: () => {
+              nmapContainer.style.display = 'none';
+              showWelcomeCard();
+            }});
+          }, 600);
         }
-    }
-  })
-  .to({}, { duration: 0.5 })
-  .to('.preloader', { yPercent: -100, duration: 0.5, ease: "power4.inOut" })
-  .from('.badge-wrapper', { y: 20, opacity: 0, duration: 0.5 }, "-=0.4")
-  .from('.hero-title', { y: 30, opacity: 0, duration: 0.6 })
-    .from('.hero-subtitle', { opacity: 0, duration: 0.5 })
-    .from('.hero-desc', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
-    .from('.hero-btns', { y: 20, opacity: 0, duration: 0.5 })
-    .from('.hero-img', { scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "-=1")
-    .from('.floating-badge', { scale: 0, opacity: 0, stagger: 0.2, duration: 0.5, ease: "back.out(2)" }, "-=0.5");
+      }
+      
+      setTimeout(typeLine, 300);
 
-  // Slide navbar down after 5 seconds
-  setTimeout(() => {
-    gsap.to('.navbar', { y: 0, opacity: 1, duration: 1, ease: "bounce.out" });
-  }, 5000);
-});
+      function showWelcomeCard() {
+        welcomeMsg.style.display = 'block';
+        gsap.from(welcomeMsg, { scale: 0.8, opacity: 0, y: 20, duration: 0.7, ease: "back.out(1.7)" });
+
+        setTimeout(() => {
+          gsap.to('.preloader', { yPercent: -100, duration: 0.8, ease: "power4.inOut" });
+          const tl = gsap.timeline();
+          tl.to('.navbar', { y: 0, opacity: 1, duration: 0.6 })
+            .from('.badge-wrapper', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
+            .from('.hero-title', { y: 30, opacity: 0, duration: 0.6 })
+            .from('.hero-subtitle', { opacity: 0, duration: 0.5 })
+            .from('.hero-desc', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
+            .from('.hero-btns', { y: 20, opacity: 0, duration: 0.5 })
+            .from('.hero-img', { scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "-=1")
+            .from('.floating-badge', { scale: 0, opacity: 0, stagger: 0.2, duration: 0.5, ease: "back.out(2)" }, "-=0.5");
+        }, 2000);
+      }
+    } else if (welcomeMsg) {
+      welcomeMsg.style.display = 'block';
+      gsap.from(welcomeMsg, { scale: 0.8, opacity: 0, y: 20, duration: 0.7, ease: "back.out(1.7)" });
+
+      setTimeout(() => {
+        gsap.to('.preloader', { yPercent: -100, duration: 0.8, ease: "power4.inOut" });
+        const tl = gsap.timeline();
+        tl.to('.navbar', { y: 0, opacity: 1, duration: 0.6 })
+          .from('.badge-wrapper', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
+          .from('.hero-title', { y: 30, opacity: 0, duration: 0.6 })
+          .from('.hero-subtitle', { opacity: 0, duration: 0.5 })
+          .from('.hero-desc', { y: 20, opacity: 0, duration: 0.5 }, "-=0.2")
+          .from('.hero-btns', { y: 20, opacity: 0, duration: 0.5 })
+          .from('.hero-img', { scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "-=1")
+          .from('.floating-badge', { scale: 0, opacity: 0, stagger: 0.2, duration: 0.5, ease: "back.out(2)" }, "-=0.5");
+      }, 2000);
+    } else {
+      gsap.to('.preloader', { yPercent: -100, duration: 0.8, ease: "power4.inOut" });
+      gsap.to('.navbar', { y: 0, opacity: 1, duration: 0.8 });
+    }
+  } else {
+    const preloader = document.querySelector('.preloader');
+    if (preloader) preloader.style.display = 'none';
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startPreloaderSequence);
+} else {
+  startPreloaderSequence();
+}
+window.addEventListener('load', startPreloaderSequence);
 
 /* ========================================
    TYPEWRITER EFFECT

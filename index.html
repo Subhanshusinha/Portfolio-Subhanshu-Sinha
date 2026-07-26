@@ -29,32 +29,48 @@
   <!-- Meta SEO -->
   <meta name="description" content="Subhanshu Sinha - Cybersecurity Enthusiast & Secure Backend Developer Portfolio">
   
-  <link rel="icon" href="assets/images/icons8-resume-100.png" />
+  <link rel="icon" href="images/icons8-resume-100.png" />
 </head>
 
 <body class="dark-theme">
-  <!-- Preloader -->
-  <div class="preloader">
-    <div class="preloader-content text-center">
-      <!-- Animated CSS Boy -->
-      <div id="preloader-boy" style="display: inline-block; margin-bottom: 20px;">
-        <div class="css-boy">
-          <div class="boy-head"></div>
-          <div class="boy-body">
-            <div class="boy-arm left"></div>
-            <div class="boy-arm right"></div>
+  <!-- Cyber Security Welcome Emblem Preloader -->
+  <div class="preloader custom-cyber-preloader" id="cyber-preloader" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #05080e; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <!-- Matrix / Network Canvas Background -->
+    <canvas id="network-canvas" class="cyber-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none;"></canvas>
+
+    <!-- NMAP Scan Terminal -->
+    <div id="nmap-scan-container" style="display: none; position: absolute; z-index: 105; width: 100%; height: 100%; align-items: center; justify-content: center; background: rgba(5,8,14,0.95);">
+      <div class="cyber-terminal-window">
+        <div class="cyber-terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
           </div>
-          <div class="boy-legs">
-            <div class="boy-leg left"></div>
-            <div class="boy-leg right"></div>
+          <div class="terminal-title">root@kali:~# nmap -sV -A target_system</div>
+          <div></div>
+        </div>
+        <div class="cyber-terminal-body">
+          <div class="cli-pane" id="nmap-output">
+            <!-- Typing effect goes here -->
           </div>
         </div>
       </div>
-      <div id="preloader-text" class="fw-bold" style="font-size: 1.5rem; color: var(--primary-orange); font-family: var(--font-heading); letter-spacing: 1px;">
-        Please wait, I am loading...
-      </div>
-      <div class="preloader-track">
-        <div class="preloader-fill" id="preloader-fill"></div>
+    </div>
+
+    <!-- Centered Cyber Security Welcome Card -->
+    <div id="preloader-welcome" class="preloader-welcome-modal" style="display: none;">
+      <div class="cyber-welcome-card">
+        <div class="cyber-emblem">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <h2 class="glitch-title" data-text="ACCESS IS GRANTED">ACCESS IS GRANTED</h2>
+        <div class="cyber-divider"></div>
+        <h4 class="cyber-welcome-sub">WELCOME TO SUBHANSHU'S SECURE PORTFOLIO</h4>
+        <div class="security-stamp">
+          <span class="stamp-tag"><i class="bi bi-shield-fill-check text-green me-1"></i> SOC VERIFIED</span>
+          <span class="stamp-tag"><i class="bi bi-lock-fill text-cyan me-1"></i> ENCRYPTED PORTAL</span>
+        </div>
       </div>
     </div>
   </div>
@@ -110,13 +126,13 @@
           <div class="hero-btns mt-5">
             <a href="#projects" class="btn-primary-glow magnetic-btn">View My Work <i class="bi bi-arrow-down-right"></i></a>
             <a href="https://github.com/Subhanshusinha" target="_blank" class="btn-outline-glow magnetic-btn ms-3"><i class="bi bi-github me-2"></i>GitHub</a>
-            <a href="assets/images/Subhanshu_Sinha_Resume.pdf" download class="btn-outline-glow magnetic-btn ms-3 mt-3 mt-md-0"><i class="bi bi-download me-2"></i>Resume</a>
+            <a href="images/Subhanshu_Sinha_Resume.pdf" download class="btn-outline-glow magnetic-btn ms-3 mt-3 mt-md-0"><i class="bi bi-download me-2"></i>Resume</a>
           </div>
         </div>
         <div class="col-lg-5 hero-image-col d-none d-lg-block">
           <div class="image-container">
             <div class="glow-orb"></div>
-            <img src="images/profile.png" alt="Subhanshu Sinha" class="hero-img">
+            <img src="images/profile_pic.png" alt="Subhanshu Sinha" class="hero-img">
             <div class="floating-badge badge-1"><i class="bi bi-shield-check"></i> SOC</div>
             <div class="floating-badge badge-2"><i class="fa-brands fa-node-js"></i> Backend</div>
           </div>
@@ -368,5 +384,6 @@
   
   <!-- Custom JS -->
   <script src="script.js"></script>
+  <script src="matrix.js"></script>
 </body>
 </html>
