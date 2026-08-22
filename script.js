@@ -468,32 +468,32 @@ document.addEventListener("DOMContentLoaded", () => {
 //   // To add more experience, just copy the block above, paste below, and change details!
 // ];
 
-const experienceGrid = document.getElementById("experience-grid");
+// const experienceGrid = document.getElementById("experience-grid");
 
-if (experienceGrid) {
-  experiences.forEach((exp, index) => {
-    const col = document.createElement("div");
-    col.className = "col-12 mb-4 timeline-item-gsap";
+// if (experienceGrid) {
+//   experiences.forEach((exp, index) => {
+//     const col = document.createElement("div");
+//     col.className = "col-12 mb-4 timeline-item-gsap";
     
-    col.innerHTML = `
-      <div class="glass-card experience-card">
-        <div class="exp-header d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
-          <div>
-            <h3 class="exp-role text-white mb-1">${exp.role}</h3>
-            <h5 class="exp-company gradient-text mb-0">${exp.company} <span class="text-muted fs-6 ms-2"><i class="bi bi-geo-alt"></i> ${exp.location}</span></h5>
-          </div>
-          <div class="exp-duration mt-2 mt-md-0">
-            <span class="custom-badge"><i class="bi bi-calendar3 me-2"></i>${exp.duration}</span>
-          </div>
-        </div>
-        <ul class="exp-list text-muted">
-          ${exp.description.map(desc => `<li><i class="bi bi-check2-circle text-primary me-2"></i>${desc}</li>`).join('')}
-        </ul>
-      </div>
-    `;
-    experienceGrid.appendChild(col);
-  });
-}
+//     col.innerHTML = `
+//       <div class="glass-card experience-card">
+//         <div class="exp-header d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+//           <div>
+//             <h3 class="exp-role text-white mb-1">${exp.role}</h3>
+//             <h5 class="exp-company gradient-text mb-0">${exp.company} <span class="text-muted fs-6 ms-2"><i class="bi bi-geo-alt"></i> ${exp.location}</span></h5>
+//           </div>
+//           <div class="exp-duration mt-2 mt-md-0">
+//             <span class="custom-badge"><i class="bi bi-calendar3 me-2"></i>${exp.duration}</span>
+//           </div>
+//         </div>
+//         <ul class="exp-list text-muted">
+//           ${exp.description.map(desc => `<li><i class="bi bi-check2-circle text-primary me-2"></i>${desc}</li>`).join('')}
+//         </ul>
+//       </div>
+//     `;
+//     experienceGrid.appendChild(col);
+//   });
+// }
 
 /* ========================================
    CERTIFICATIONS DATA & RENDER
