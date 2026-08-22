@@ -452,21 +452,21 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ========================================
    EXPERIENCE DATA & RENDER
    ======================================== */
-const experiences = [
-  {
-    role: "Technical Writer & Content Specialist", // Assumed role based on description
-    company: "Testshine Co., Ltd.",
-    location: "Shanghai, China (Remote)",
-    duration: "Present", // Or a specific date if provided
-    description: [
-      "Developed and maintained technical documentation for laboratory testing instruments, including product brochures, specifications, and user-focused technical materials.",
-      "Conducted in-depth research and analysis of testing equipment, industry standards, and product specifications to produce accurate technical documentation.",
-      "Collaborated with engineering, design, and web development teams to prepare product documentation, MDX content, and website materials for digital publication.",
-      "Supported website development by creating structured technical content, optimizing documentation, and managing product information for online deployment."
-    ]
-  }
-  // To add more experience, just copy the block above, paste below, and change details!
-];
+// const experiences = [
+//   {
+//     role: "Technical Writer & Content Specialist", // Assumed role based on description
+//     company: "Testshine Co., Ltd.",
+//     location: "Shanghai, China (Remote)",
+//     duration: "Present", // Or a specific date if provided
+//     description: [
+//       "Developed and maintained technical documentation for laboratory testing instruments, including product brochures, specifications, and user-focused technical materials.",
+//       "Conducted in-depth research and analysis of testing equipment, industry standards, and product specifications to produce accurate technical documentation.",
+//       "Collaborated with engineering, design, and web development teams to prepare product documentation, MDX content, and website materials for digital publication.",
+//       "Supported website development by creating structured technical content, optimizing documentation, and managing product information for online deployment."
+//     ]
+//   }
+//   // To add more experience, just copy the block above, paste below, and change details!
+// ];
 
 const experienceGrid = document.getElementById("experience-grid");
 
